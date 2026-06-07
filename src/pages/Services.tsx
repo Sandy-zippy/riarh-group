@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { motion, useTransform, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { SPRING } from '../motion'
-import { useScrollProgress } from '../hooks/useScrollProgress'
 import { PROJECTS, HERO_IMAGE, cardImage } from '../data/site'
+import StickyPhases from '../components/StickyPhases'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -50,65 +50,6 @@ const FEATURED = PROJECTS.filter(
       p.name,
     ),
 )
-
-// ── Editorial phase row: number + title + serif lead + body + consult CTA,
-// paired with a parallax image. Alternates side on large screens. ──
-function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
-  const { ref, progress } = useScrollProgress<HTMLDivElement>()
-  const y = useTransform(progress, [0, 1], ['-10%', '10%'])
-  // Subtle scroll-linked zoom mirroring the reference: the image grows from 1 to
-  // 1.08 as the row travels through the viewport. Reduced-motion users get a
-  // static scale of 1.
-  const scale = useTransform(progress, [0, 1], [1, 1.08])
-  const flip = index % 2 === 1
-  const reduce = useReducedMotion()
-  const imageScale = reduce ? 1 : scale
-  // Richer directional slide-in: text enters from the outer edge, image from the
-  // opposite side. Clipped by overflow-hidden so the offset never adds scroll.
-  const textX = reduce ? 0 : flip ? 40 : -40
-  const imgX = reduce ? 0 : flip ? -40 : 40
-
-  return (
-    <div className="grid items-center gap-10 overflow-hidden lg:grid-cols-2 lg:gap-16">
-      {/* Text */}
-      <motion.div
-        initial={{ opacity: 0, x: textX, y: 24 }}
-        whileInView={{ opacity: 1, x: 0, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={SPRING}
-        className={flip ? 'lg:order-2' : 'lg:order-1'}
-      >
-        <h3 className="display display-xl text-ink">
-          <span className="text-accent">{phase.num}</span> {phase.title}
-        </h3>
-        <p className="display mt-6 max-w-md text-[clamp(1.5rem,2.4vw,1.75rem)] leading-snug text-ink/75">
-          {phase.lead}
-        </p>
-        <p className="mt-6 max-w-md body-ref text-ink/60">{phase.desc}</p>
-      </motion.div>
-
-      {/* Image */}
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, x: imgX, y: 24 }}
-        whileInView={{ opacity: 1, x: 0, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ ...SPRING, delay: 0.08 }}
-        className={`relative aspect-[4/3] w-full overflow-hidden ${
-          flip ? 'lg:order-1' : 'lg:order-2'
-        }`}
-      >
-        <motion.img
-          src={`${BASE}projects/${phase.image}`}
-          alt={phase.title}
-          loading="lazy"
-          style={{ y, scale: imageScale }}
-          className="absolute left-0 top-[-15%] h-[130%] w-full object-cover"
-        />
-      </motion.div>
-    </div>
-  )
-}
 
 export default function Services() {
   const reduce = useReducedMotion()
@@ -206,16 +147,8 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ── PHASES (light) ── */}
-      <section className="bg-cream text-ink">
-        <div className="mx-auto max-w-7xl px-6 py-24 md:py-32">
-          <div className="flex flex-col gap-24 md:gap-32">
-            {PHASES.map((phase, i) => (
-              <PhaseRow key={phase.num} phase={phase} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── PHASES — sticky scroll reveal (pinned image, scrolling steps) ── */}
+      <StickyPhases phases={PHASES} />
 
       {/* ── FEATURED PROJECTS (dark) ── */}
       <section className="bg-ink text-cream">

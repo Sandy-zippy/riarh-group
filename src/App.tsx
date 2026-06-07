@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { projectBySlug } from './data/site'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import { ScrollProgressBar } from './components/premium'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
@@ -51,13 +53,21 @@ function ScrollToTop() {
   return null
 }
 
-export default function App() {
+// A subtle cross-route fade/rise so navigation feels like one continuous product
+// rather than hard page loads. Keyed by pathname; instant under reduced motion.
+function AnimatedRoutes() {
+  const location = useLocation()
+  const reduce = useReducedMotion()
   return (
-    <>
-      <ScrollToTop />
-      <Nav />
-      <main className="pt-16">
-        <Routes>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={reduce ? false : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={reduce ? undefined : { opacity: 0, y: -8 }}
+        transition={{ duration: 0.28, ease: [0.44, 0, 0.56, 1] }}
+      >
+        <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/commercial" element={<Commercial />} />
           <Route path="/commercial/:slug" element={<ProjectDetail />} />
@@ -68,6 +78,19 @@ export default function App() {
           <Route path="/terms-and-conditions" element={<Terms />} />
           <Route path="*" element={<Stub title="Page not found" />} />
         </Routes>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
+export default function App() {
+  return (
+    <>
+      <ScrollProgressBar />
+      <ScrollToTop />
+      <Nav />
+      <main className="pt-16">
+        <AnimatedRoutes />
       </main>
       <Footer />
     </>

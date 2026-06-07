@@ -1,5 +1,6 @@
 import Hero from '../sections/Hero'
 import Intro from '../sections/Intro'
+import SectorMarquee from '../sections/SectorMarquee'
 import CommercialTeaser from '../sections/CommercialTeaser'
 import Mission from '../sections/Mission'
 import Decades from '../sections/Decades'
@@ -12,6 +13,7 @@ export default function Home() {
     <>
       <Hero />
       <Intro />
+      <SectorMarquee />
       <CommercialTeaser />
       <Mission />
       <Decades />

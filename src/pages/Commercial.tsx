@@ -4,6 +4,8 @@ import { SPRING } from '../motion'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import { PHONE, PHONE_TEL } from '../data/site'
 import Portfolio from '../sections/Portfolio'
+import SectorMarquee from '../sections/SectorMarquee'
+import { SpotlightCard } from '../components/premium'
 
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
 
@@ -112,6 +114,9 @@ export default function Commercial() {
         </div>
       </section>
 
+      {/* ── SECTOR BREADTH — endless marquee of the verticals we build ── */}
+      <SectorMarquee />
+
       {/* ── PORTFOLIO — category-filtered (Commercial / Industrial / Tenant Improvements) ── */}
       <Portfolio />
 
@@ -153,19 +158,48 @@ export default function Commercial() {
             </motion.div>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 md:grid-cols-3">
-            {CAPABILITIES.map((c, i) => (
+          {/* Asymmetric bento (Aceternity Bento pattern): a large image-backed
+              feature tile for Tenant Improvements (promoted per Dal) + two
+              smaller cards, each with a cursor spotlight. */}
+          <div className="mt-16 grid gap-4 md:grid-cols-3 md:grid-rows-2">
+            <motion.div
+              {...fadeUp}
+              transition={SPRING}
+              className="md:col-span-2 md:row-span-2"
+            >
+              <SpotlightCard className="group relative h-full min-h-[20rem] rounded-xl ring-1 ring-transparent transition-shadow duration-300 hover:ring-accent/40 hover:shadow-[0_22px_60px_-24px_rgba(218,119,52,0.5)]">
+                <img
+                  src={asset('projects/heal-wellness.jpg')}
+                  alt="Tenant improvement build by Riarh Group"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:scale-[1.04]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10" />
+                <div className="relative flex h-full flex-col justify-end p-8 lg:p-12">
+                  <span className="text-sm tracking-[0.04em] text-accent">01</span>
+                  <h3 className="display mt-4 text-[clamp(1.6rem,2.6vw,2.1rem)] leading-[1.2] text-cream">
+                    {CAPABILITIES[0].title}
+                  </h3>
+                  <p className="body-ref mt-4 max-w-md text-cream/75">
+                    {CAPABILITIES[0].desc}
+                  </p>
+                </div>
+              </SpotlightCard>
+            </motion.div>
+
+            {CAPABILITIES.slice(1).map((c, i) => (
               <motion.div
                 key={c.title}
                 {...fadeUp}
-                transition={{ ...SPRING, delay: i * 0.08 }}
-                className="relative flex flex-col bg-cream p-8 ring-1 ring-transparent transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] hover:z-10 hover:-translate-y-0.5 hover:shadow-[0_12px_34px_-16px_rgba(218,119,52,0.4)] hover:ring-accent/40 lg:p-12"
+                transition={{ ...SPRING, delay: (i + 1) * 0.08 }}
               >
-                <span className="text-sm tracking-[0.04em] text-accent">0{i + 1}</span>
-                <h3 className="display mt-5 text-[1.5rem] leading-[1.3] text-ink min-h-[3.9rem] md:min-h-[3.9rem]">
-                  {c.title}
-                </h3>
-                <p className="body-ref mt-4 text-ink/65">{c.desc}</p>
+                <SpotlightCard className="flex h-full flex-col rounded-xl border border-ink/10 bg-cream p-8 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_12px_34px_-16px_rgba(218,119,52,0.4)] lg:p-9">
+                  <span className="text-sm tracking-[0.04em] text-accent">0{i + 2}</span>
+                  <h3 className="display mt-4 text-[1.4rem] leading-[1.3] text-ink">
+                    {c.title}
+                  </h3>
+                  <p className="body-ref mt-3 text-ink/65">{c.desc}</p>
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>

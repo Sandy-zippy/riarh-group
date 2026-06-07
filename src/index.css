@@ -170,3 +170,28 @@
     }
   }
 }
+
+/* Infinite marquee (ported from the Aceternity "Infinite Moving Cards" pattern,
+   recoloured to brand). Two identical copies sit side by side; the track slides
+   left by exactly 50% then loops, so the row reads as endless. Pauses on hover;
+   fully static under reduced-motion. */
+@keyframes riarh-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: riarh-marquee var(--marquee-duration, 42s) linear infinite;
+  will-change: transform;
+}
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

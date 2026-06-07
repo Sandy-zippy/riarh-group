@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { animate, motion, useInView, useReducedMotion } from 'framer-motion'
 import { STATS } from '../data/site'
 import { SPRING } from '../motion'
+import { SpotlightCard } from '../components/premium'
 
 // Reference renders the stat at rest with the "+" suffix small and raised —
 // e.g. "100K" full size, "+" superscript. A single count-up ticks the number
@@ -74,7 +75,7 @@ export default function Decades() {
           </motion.p>
         </div>
 
-        <div className="mt-16 flex flex-col gap-12 sm:flex-row sm:justify-between">
+        <div className="mt-16 grid gap-5 sm:grid-cols-3">
           {STATS.map(([value, label], i) => (
             <motion.div
               key={label}
@@ -83,12 +84,14 @@ export default function Decades() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ ...SPRING, delay: i * 0.1 }}
             >
-              <div className="display display-xl leading-none text-cream">
-                <Stat value={value} />
-              </div>
-              <div className="mt-4 max-w-[14rem] body-ref text-cream">
-                {label}
-              </div>
+              <SpotlightCard className="h-full rounded-lg border border-line/60 p-7 transition-colors duration-300 hover:border-accent/40 md:p-8">
+                <div className="display display-xl leading-none text-cream">
+                  <Stat value={value} />
+                </div>
+                <div className="mt-4 max-w-[14rem] body-ref text-cream/80">
+                  {label}
+                </div>
+              </SpotlightCard>
             </motion.div>
           ))}
         </div>

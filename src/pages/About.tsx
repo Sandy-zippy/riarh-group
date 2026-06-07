@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import { SPRING, EASE } from '../motion'
 import { STATS } from '../data/site'
 import { useScrollProgress } from '../hooks/useScrollProgress'
+import { SpotlightCard } from '../components/premium'
 
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
 
@@ -415,11 +416,11 @@ function Founder() {
                 className="relative mt-8 aspect-[4/5] max-w-[18rem] overflow-hidden rounded-xl ring-1 ring-line"
               >
                 <img
-                  src={asset('projects/dal-ceo.jpg')}
+                  src={asset('projects/dal-ceo-portrait.jpg')}
                   alt="Dal Riarh, Founder and CEO of Riarh Group"
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover object-[62%_center]"
+                  className="h-full w-full object-cover object-[center_38%]"
                 />
               </motion.div>
             </div>
@@ -495,21 +496,23 @@ function Team() {
                 key={m.name}
                 {...enter}
                 transition={{ ...SPRING, delay: i * 0.1 }}
-                className="group max-w-sm transition-transform duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-0.5"
+                className="group transition-transform duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-1"
               >
-                <span
-                  aria-hidden
-                  className="flex h-20 w-20 items-center justify-center rounded-full bg-ink text-lg uppercase tracking-[0.08em] text-cream/80 ring-1 ring-accent/60 transition-colors duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:bg-accent group-hover:text-ink group-hover:ring-accent"
-                >
-                  {m.initials}
-                </span>
-                <h3 className="display mt-7 text-[1.9375rem] leading-none text-cream">
-                  {m.name}
-                </h3>
-                <p className="mt-3 text-xs uppercase tracking-[0.18em] text-accent">
-                  {m.role}
-                </p>
-                <p className="body-ref mt-5 text-muted">{m.desc}</p>
+                <SpotlightCard className="h-full rounded-xl border border-line/60 p-8 transition-colors duration-300 group-hover:border-accent/40">
+                  <span
+                    aria-hidden
+                    className="flex h-20 w-20 items-center justify-center rounded-full bg-ink text-lg uppercase tracking-[0.08em] text-cream/80 ring-1 ring-accent/60 transition-colors duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:bg-accent group-hover:text-ink group-hover:ring-accent"
+                  >
+                    {m.initials}
+                  </span>
+                  <h3 className="display mt-7 text-[1.9375rem] leading-none text-cream">
+                    {m.name}
+                  </h3>
+                  <p className="mt-3 text-xs uppercase tracking-[0.18em] text-accent">
+                    {m.role}
+                  </p>
+                  <p className="body-ref mt-5 text-muted">{m.desc}</p>
+                </SpotlightCard>
               </motion.div>
             ))}
           </div>
