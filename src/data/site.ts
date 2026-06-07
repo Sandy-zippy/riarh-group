@@ -1,9 +1,8 @@
 export const PHONE = '604-644-4120'
 export const PHONE_TEL = '6046444120'
 export const EMAIL = 'info@riarhgroup.com'
-// Dal asked for all exact street addresses removed from the site — keep a city +
-// service-area locator only (no unit / street / postal code).
-export const ADDRESS = { line1: 'Surrey, British Columbia', line2: 'Serving Western Canada' }
+// Matches the reference footer (full address kept).
+export const ADDRESS = { line1: '#202 15350 Croydon Dr,', line2: 'Surrey, BC, V3Z 1H4' }
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/riarhgroup/',
   facebook: 'https://www.facebook.com/profile.php?id=61561453983767',

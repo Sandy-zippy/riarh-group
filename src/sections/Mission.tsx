@@ -1,39 +1,74 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { useRef } from 'react'
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from 'framer-motion'
 import { SPRING, EASE } from '../motion'
 
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
 
-// Reference Mission layout: a centred headline + body, then a clean 3-column
-// photo composition beneath it — two stacked landscape plates on the left, one
-// tall portrait plate in the centre, two stacked landscape plates on the right.
-// Built as a real CSS grid (no absolute percentages / fixed-height box), so it
-// can't develop dead space or collide. The centre plate row-spans to match the
-// height of the two side plates plus the gap. Images chosen so none repeats a
+// Reference Mission: a centred headline + body, then a STAGGERED photo scatter
+// that is DYNAMIC — as the section travels through the viewport each plate drifts
+// vertically at its own speed (scroll-linked parallax), so the composition feels
+// alive rather than a frozen grid. Built on a 3-column flow (two plates left, one
+// tall plate centre, two plates right) with per-plate top offsets for the organic
+// scatter, plus a fade/rise on first reveal. Images chosen so none repeats a
 // Featured Projects panel (Featured uses broadway/mucho-abbotsford/heal/
 // fresh-haul/medico/sunshine).
-const PLATES = [
-  { img: 'co-working-space.jpg', cls: 'col-start-1 row-start-1 aspect-[4/3]' },
-  { img: 'mortgage-offices.jpg', cls: 'col-start-1 row-start-2 aspect-[4/3]' },
-  { img: 'ignis-gale.jpg', cls: 'col-start-2 row-start-1 row-span-2 h-full' },
-  { img: 'riarh-hq.jpg', cls: 'col-start-3 row-start-1 aspect-[4/3]' },
-  { img: 'mucho-burrito-burnaby.jpg', cls: 'col-start-3 row-start-2 aspect-[4/3]' },
+type Plate = { img: string; offset: string; ar: string; range: [number, number] }
+
+// Plates within a column share a drift range so the stacked pair never collides;
+// the three columns drift at clearly different rates so they parallax against
+// each other as the section passes through (the reference's "alive" feel).
+const LEFT_RANGE: [number, number] = [110, -110]
+const CENTER_RANGE: [number, number] = [200, -50]
+const RIGHT_RANGE: [number, number] = [40, -170]
+
+const LEFT: Plate[] = [
+  { img: 'co-working-space.jpg', offset: 'mt-10', ar: 'aspect-[4/3]', range: LEFT_RANGE },
+  { img: 'mortgage-offices.jpg', offset: 'mt-6', ar: 'aspect-[4/3]', range: LEFT_RANGE },
+]
+const CENTER: Plate = {
+  img: 'ignis-gale.jpg',
+  offset: 'mt-28',
+  ar: 'aspect-[3/4]',
+  range: CENTER_RANGE,
+}
+const RIGHT: Plate[] = [
+  { img: 'riarh-hq.jpg', offset: 'mt-0', ar: 'aspect-[4/3]', range: RIGHT_RANGE },
+  { img: 'mucho-burrito-burnaby.jpg', offset: 'mt-8', ar: 'aspect-[4/3]', range: RIGHT_RANGE },
 ]
 
-function Plate({ img, cls, index }: { img: string; cls: string; index: number }) {
+function ScatterPlate({
+  plate,
+  progress,
+  index,
+}: {
+  plate: Plate
+  progress: MotionValue<number>
+  index: number
+}) {
   const reduce = useReducedMotion()
+  // Scroll-linked parallax: each plate maps the section's scroll progress to its
+  // own y range, so they drift apart at different speeds (depth/parallax).
+  const y = useTransform(progress, [0, 1], plate.range)
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y: 32, scale: 0.94 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ ...SPRING, ease: EASE, delay: index * 0.09 }}
-      className={'relative overflow-hidden ' + cls}
+      style={{ y: reduce ? 0 : y }}
+      initial={reduce ? false : { opacity: 0, y: 36, scale: 0.94 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ ...SPRING, ease: EASE, delay: index * 0.08 }}
+      className={'relative overflow-hidden ' + plate.offset + ' ' + plate.ar}
     >
       <img
-        src={asset('projects/' + img)}
+        src={asset('projects/' + plate.img)}
         alt="Riarh Group completed interior"
         loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-[1.04]"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-[1.05]"
       />
     </motion.div>
   )
@@ -85,25 +120,38 @@ function Header() {
 }
 
 export default function Mission() {
+  const ref = useRef<HTMLDivElement>(null)
+  // Progress 0 → 1 as the section travels from entering to leaving the viewport;
+  // drives the per-plate parallax.
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+
+  const ALL = [...LEFT, CENTER, ...RIGHT]
+
   return (
-    <section className="overflow-hidden bg-cream text-ink">
+    <section ref={ref} className="overflow-hidden bg-cream text-ink">
       <div className="mx-auto max-w-7xl px-6 py-28 md:py-36">
         <Header />
 
-        {/* Desktop (lg+): the 3-column reference composition */}
-        <div className="mt-16 hidden grid-cols-3 gap-5 lg:grid">
-          {PLATES.map((p, i) => (
-            <Plate key={p.img} img={p.img} cls={p.cls} index={i} />
-          ))}
+        {/* Desktop (lg+): the staggered, parallaxing reference composition */}
+        <div className="mt-14 hidden grid-cols-3 items-start gap-5 lg:grid">
+          <div className="flex flex-col gap-5">
+            <ScatterPlate plate={LEFT[0]} progress={scrollYProgress} index={0} />
+            <ScatterPlate plate={LEFT[1]} progress={scrollYProgress} index={1} />
+          </div>
+          <ScatterPlate plate={CENTER} progress={scrollYProgress} index={2} />
+          <div className="flex flex-col gap-5">
+            <ScatterPlate plate={RIGHT[0]} progress={scrollYProgress} index={3} />
+            <ScatterPlate plate={RIGHT[1]} progress={scrollYProgress} index={4} />
+          </div>
         </div>
 
-        {/* Mobile + tablet (below lg): a clean stacked grid */}
+        {/* Mobile + tablet (below lg): a clean stacked grid (no parallax) */}
         <div className="mt-12 grid grid-cols-2 gap-4 lg:hidden">
-          {PLATES.map((p, i) => {
-            // 5 plates in a 2-col grid leaves a lone orphan in the last row.
-            // Let the final plate span full width as a banner so it resolves
-            // cleanly with no empty cell.
-            const isLast = i === PLATES.length - 1
+          {ALL.map((p, i) => {
+            const isLast = i === ALL.length - 1
             return (
               <div
                 key={p.img}

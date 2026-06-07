@@ -24,7 +24,7 @@ item("DONE", "Removed leftover Framer template junk from the nav (the Product an
 item("DONE", "Added phone number 604-644-4120 prominently, click-to-call, in the header and footer (Dal + Ameya).")
 item("DONE", "Made the “years in business” figure consistent at 15+ everywhere (the original said 15 in the copy but 12+ in the stats) (Ameya + Dal).")
 item("DONE", "Removed all em/en dashes from the copy.")
-item("DONE", "Removed all exact street addresses from the site (Dal).")
+item("DONE", "Project listings show city/region only (no street addresses), matching the reference (Dal). The company HQ address is kept in the footer and Contact page exactly as on the reference site. (If Dal wants the HQ street address removed too, that is a one-line change, flag it.)")
 item("DONE", "Removed all residential content and the stray residential page (Dal).")
 item("DONE", "Set the geographic focus to “Western Canada” (Dal: focus area Western Canada for now).")
 item("DONE", "Full grammar and spelling pass across all copy (hyphenation, comma splices, possessives, Oxford commas).")
@@ -46,7 +46,7 @@ item("DONE", "Footer phone added and “Inquire Today” changed to “Start You
 item("DONE", "Footer rebuilt to the reference treatment: the closing call-to-action now sits over a project photo behind a dark scrim (matching the reference's photo-backed footer band), with the link columns on solid ink below. Resolves the “footer colour is different” note.")
 item("DONE", "Home hero image swapped to a real Riarh build per Dal's “Change Image” note.")
 item("DONE", "Design polish: Why-circles now merge into one single circle; Approach cards have a scroll-zoom reveal.")
-item("DONE", "Our Mission section rebuilt to the reference's 3-column photo composition (two stacked plates left, one tall plate centre, two stacked right), replacing the earlier scattered layout that left dead space. Plates fade and rise into place on scroll. Resolves the “Mission section is buggy” note.")
+item("DONE", "Our Mission section rebuilt to the reference's staggered photo scatter (two plates left, one tall plate centre, two right) with DYNAMIC scroll-linked parallax — each column drifts at its own speed as the section passes through, matching the reference's “alive” feel (the earlier version was a static grid). Resolves the “Mission section is buggy / static” note.")
 
 h1("3. About / Who We Are")
 item("DONE", "Hero rewritten to “Built from the most demanding environment in construction, healthcare…” (was “The Evolution of Excellence”) (Ameya).")
