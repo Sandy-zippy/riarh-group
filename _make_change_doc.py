@@ -50,11 +50,11 @@ for blk in blocks:
     typ = blk[0]
     if typ == 'item':
         status = blk[2]
-        tok = ("Done" if status == 'DONE' else ("Pending" if status == 'PENDING' else status))
-        line = f"{tok}  —  {blk[1]}"
+        glyph = "✅" if status == 'DONE' else "⬜"  # ✅ or ⬜
+        line = f"{glyph}  {blk[1]}"
         start = len(full); full += line + "\n"
         paras.append({'s': start, 'e': len(full), 'type': 'item',
-                      'status': status, 'tok_len': len(tok)})
+                      'status': status, 'tok_len': len(glyph)})
     else:
         line = blk[1]
         start = len(full); full += line + "\n"
@@ -91,15 +91,12 @@ for pr in paras:
         reqs.append({"createParagraphBullets": {
             "range": {"startIndex": s, "endIndex": e},
             "bulletPreset": "BULLET_DISC_CIRCLE_SQUARE"}})
-    if pr['type'] == 'item':
-        reqs.append({"createParagraphBullets": {
-            "range": {"startIndex": s, "endIndex": e},
-            "bulletPreset": "BULLET_CHECKBOX"}})
-        col = GREEN if pr['status'] == 'DONE' else AMBER
+    if pr['type'] == 'item' and pr['status'] != 'DONE':
+        # Tint the pending box marker amber so open items stand out at a glance.
         reqs.append({"updateTextStyle": {
             "range": {"startIndex": s, "endIndex": s + pr['tok_len']},
-            "textStyle": {"bold": True, "foregroundColor": {"color": {"rgbColor": col}}},
-            "fields": "bold,foregroundColor"}})
+            "textStyle": {"foregroundColor": {"color": {"rgbColor": AMBER}}},
+            "fields": "foregroundColor"}})
 
 gws(['docs', 'documents', 'batchUpdate'], params={"documentId": doc_id}, body={"requests": reqs})
 print("DOC_ID:" + doc_id)

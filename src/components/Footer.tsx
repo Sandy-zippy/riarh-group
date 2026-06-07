@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { ADDRESS, EMAIL, PHONE, PHONE_TEL, SOCIAL } from '../data/site'
 import { SPRING } from '../motion'
 
+const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
+
 const QUICKLINKS = [
   { label: 'Home', to: '/' },
   { label: 'Commercial', to: '/commercial' },
@@ -15,31 +17,46 @@ export default function Footer() {
   const reduce = useReducedMotion()
 
   return (
-    <footer className="border-t border-line/60 bg-ink">
-      {/* CTA band */}
-      <div className="mx-auto max-w-7xl px-6 py-20">
-        <motion.div
-          initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={reduce ? { duration: 0 } : SPRING}
-          className="flex flex-col items-start justify-between gap-8 border-b border-line/60 pb-16 md:flex-row md:items-end"
-        >
-          <div>
-            <p className="eyebrow mb-5">Start your project</p>
-            <h2 className="display display-xl max-w-3xl text-cream">
-              Let's build something that lasts.
-            </h2>
-          </div>
-          <Link
-            to="/contact-us"
-            className="cta-shine shrink-0 rounded-full bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-ink transition-transform hover:-translate-y-0.5"
+    <footer className="bg-ink">
+      {/* Photo-backed CTA band (reference treatment): a project interior behind
+          a dark scrim, with the closing call-to-action over it. */}
+      <div className="relative overflow-hidden border-t border-line/60">
+        <img
+          src={asset('projects/co-working-space.jpg')}
+          alt=""
+          aria-hidden
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-ink/82" />
+        <div className="absolute inset-0 [background:radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(218,119,52,0.10),transparent_70%)]" />
+        <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-28">
+          <motion.div
+            initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={reduce ? { duration: 0 } : SPRING}
+            className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end"
           >
-            Start Your Project
-          </Link>
-        </motion.div>
+            <div>
+              <p className="eyebrow mb-5">Start your project</p>
+              <h2 className="display display-xl max-w-3xl text-cream">
+                Let's build something that lasts.
+              </h2>
+            </div>
+            <Link
+              to="/contact-us"
+              className="cta-shine shrink-0 rounded-full bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-ink transition-transform hover:-translate-y-0.5"
+            >
+              Start Your Project
+            </Link>
+          </motion.div>
+        </div>
+      </div>
 
-        <div className="grid grid-cols-1 gap-12 pt-14 md:grid-cols-3">
+      {/* Columns on solid ink */}
+      <div className="mx-auto max-w-7xl px-6 pb-16 pt-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           <motion.div
             initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
             whileInView={{ opacity: 1, y: 0 }}

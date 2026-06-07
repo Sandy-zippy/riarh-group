@@ -182,7 +182,9 @@ export default function Contact() {
             <span className="inline-flex items-start gap-2.5 text-cream [&>svg]:mt-0.5 [&>svg]:shrink-0">
               <PinIcon />
               <span>
-                {ADDRESS.line1} {ADDRESS.line2}
+                {ADDRESS.line1}
+                <br />
+                {ADDRESS.line2}
               </span>
             </span>
           </motion.div>

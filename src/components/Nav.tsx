@@ -6,14 +6,24 @@ import { NAV, PHONE, PHONE_TEL } from '../data/site'
 export default function Nav() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const { pathname } = useLocation()
   useEffect(() => setOpen(false), [pathname])
 
-  // Reference treatment: the header is flush/transparent over the hero, then
-  // resolves to a solid ink bar once the user scrolls (so links stay legible
-  // over the light sections). The menu being open also forces the solid bar.
+  // Reference treatment: a DYNAMIC header. Flush/transparent over the hero at the
+  // very top; once scrolled it resolves to a solid ink bar AND it hides when you
+  // scroll down (so each section is unobstructed) and slides back in the moment
+  // you scroll up. Matches the reference's appear/hide-on-scroll behaviour.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    let last = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 40)
+      if (y < 80) setHidden(false)
+      else if (y > last + 6) setHidden(true) // scrolling down
+      else if (y < last - 6) setHidden(false) // scrolling up
+      last = y
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -24,9 +34,10 @@ export default function Nav() {
   return (
     <header
       className={
-        'fixed inset-x-0 top-0 z-50 transition-colors duration-300 ' +
+        'fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color] duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] ' +
+        (hidden && !open ? '-translate-y-full ' : 'translate-y-0 ') +
         (solid
-          ? 'border-b border-line/60 bg-ink/85 backdrop-blur-md'
+          ? 'border-b border-line/60 bg-ink/90 backdrop-blur-md'
           : 'border-b border-transparent bg-transparent')
       }
     >
