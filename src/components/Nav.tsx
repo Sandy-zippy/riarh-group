@@ -30,7 +30,7 @@ export default function Nav() {
           : 'border-b border-transparent bg-transparent')
       }
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" aria-label="Riarh Group home" className="flex min-h-11 items-center">
           <img
             src={`${import.meta.env.BASE_URL}logo-mark.svg`}
@@ -39,7 +39,9 @@ export default function Nav() {
           />
         </Link>
 
-        <div className="hidden items-center gap-8 lg:flex">
+        {/* Nav links truly centred in the header (absolute centre, so unequal
+            logo/right-group widths don't bias them) — matches the reference. */}
+        <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
           {NAV.map((n) => (
             <Link
               key={n.to}
