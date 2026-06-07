@@ -56,8 +56,13 @@ const FEATURED = PROJECTS.filter(
 function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
   const { ref, progress } = useScrollProgress<HTMLDivElement>()
   const y = useTransform(progress, [0, 1], ['-10%', '10%'])
+  // Subtle scroll-linked zoom mirroring the reference: the image grows from 1 to
+  // 1.08 as the row travels through the viewport. Reduced-motion users get a
+  // static scale of 1.
+  const scale = useTransform(progress, [0, 1], [1, 1.08])
   const flip = index % 2 === 1
   const reduce = useReducedMotion()
+  const imageScale = reduce ? 1 : scale
   // Richer directional slide-in: text enters from the outer edge, image from the
   // opposite side. Clipped by overflow-hidden so the offset never adds scroll.
   const textX = reduce ? 0 : flip ? 40 : -40
@@ -97,7 +102,7 @@ function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
           src={`${BASE}projects/${phase.image}`}
           alt={phase.title}
           loading="lazy"
-          style={{ y }}
+          style={{ y, scale: imageScale }}
           className="absolute left-0 top-[-15%] h-[130%] w-full object-cover"
         />
       </motion.div>

@@ -41,6 +41,30 @@ const VALUES = [
   },
 ]
 
+// Leadership team. Names + roles supplied verbatim; descriptor lines are
+// generic to the role (no fabricated personal history). Monogram initials only,
+// since we hold no headshots for Terry or Rochelle and keep all three consistent.
+const TEAM = [
+  {
+    name: 'Dal Riarh',
+    initials: 'DR',
+    role: 'Founder & CEO',
+    desc: 'Sets the standard and stays close to every build from first drawing to final walkthrough.',
+  },
+  {
+    name: 'Terry Sihota',
+    initials: 'TS',
+    role: 'Project Manager',
+    desc: 'Keeps each project on scope, on budget, and on schedule with disciplined day-to-day oversight.',
+  },
+  {
+    name: 'Rochelle',
+    initials: 'R',
+    role: 'Project Coordinator',
+    desc: 'Aligns crews, clients, and timelines so every detail moves through the build without friction.',
+  },
+]
+
 // Self-drawing eyebrow hairline: scaleX 0->1 from the left on scroll-in.
 // Final width is identical to the static w-20 rule it replaces.
 function AccentRule({ className = '' }: { className?: string }) {
@@ -440,7 +464,62 @@ function Founder() {
   )
 }
 
-/* 6 ── ETHOS. Reference: a tall photo on the left and a 2x2 values grid on the
+/* 6 ── TEAM. The leadership behind the work: a three-up row of monogram cards
+   on dark, matching the site's editorial fade-up + stagger. No headshots, so
+   all three read as consistent terracotta-ringed monograms. */
+function Team() {
+  return (
+    <section className="bg-ink">
+      <div className="mx-auto max-w-7xl px-6 pb-24 md:pb-32">
+        <div className="border-t border-line pt-24 md:pt-32">
+          <motion.div
+            {...enter}
+            transition={SPRING}
+            className="flex items-center gap-4"
+          >
+            <span className="eyebrow">The Team</span>
+            <AccentRule />
+          </motion.div>
+          <motion.h2
+            {...enter}
+            transition={{ ...SPRING, delay: 0.08 }}
+            className="display display-xl mt-8 max-w-2xl text-cream"
+          >
+            The people behind{' '}
+            <span className="italic">every build.</span>
+          </motion.h2>
+
+          <div className="mt-14 grid gap-x-12 gap-y-14 sm:grid-cols-2 md:grid-cols-3">
+            {TEAM.map((m, i) => (
+              <motion.div
+                key={m.name}
+                {...enter}
+                transition={{ ...SPRING, delay: i * 0.1 }}
+                className="group max-w-sm transition-transform duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-0.5"
+              >
+                <span
+                  aria-hidden
+                  className="flex h-20 w-20 items-center justify-center rounded-full bg-ink text-lg uppercase tracking-[0.08em] text-cream/80 ring-1 ring-accent/60 transition-colors duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:bg-accent group-hover:text-ink group-hover:ring-accent"
+                >
+                  {m.initials}
+                </span>
+                <h3 className="display mt-7 text-[1.9375rem] leading-none text-cream">
+                  {m.name}
+                </h3>
+                <p className="mt-3 text-xs uppercase tracking-[0.18em] text-accent">
+                  {m.role}
+                </p>
+                <p className="body-ref mt-5 text-muted">{m.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* 7 ── ETHOS. Reference: a tall photo on the left and a 2x2 values grid on the
    right (Integrity / Stewardship / Ownership / Innovation), on dark. */
 function Ethos() {
   const { ref, progress } = useScrollProgress<HTMLDivElement>()
@@ -566,6 +645,7 @@ export default function About() {
       <Decades />
       <Relationships />
       <Founder />
+      <Team />
       <Ethos />
       <CTA />
     </>

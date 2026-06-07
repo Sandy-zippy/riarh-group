@@ -1,0 +1,112 @@
+MOTION AUDIT REPORT - Riarh Group Website Rebuild
+
+SCOPE: Featured Projects section, Portfolio/Commercial grid, and ProjectDetail page
+
+KEY FINDINGS:
+
+1. PORTFOLIO GRID SECTION (/Users/sandy/riarh-group/src/sections/Portfolio.tsx)
+   ─────────────────────────────────────────────────────────────────────────────
+   
+   REFERENCE BEHAVIOR:
+   - Horizontal carousel/slider showing ONE large project card at a time
+   - Carousel pagination dots visible at bottom (circular indicators)
+   - Cards appear to transition/advance with scroll or auto-advance
+   - Full-width card display with landscape aspect ratio
+   
+   REBUILD CURRENT:
+   - 3-column responsive grid (6 columns on desktop)
+   - Multiple cards visible simultaneously
+   - Grid uses category filtering (All, Commercial, Industrial, Tenant Improvements)
+   - AnimatePresence with fade/scale transitions on filter change
+   - Cards have hover effects (translate-y, border, shadow)
+   
+   MOTION GAPS:
+   ✗ Carousel component completely missing - should be horizontal slider, not grid
+   ✗ Carousel pagination dots/indicators missing
+   ✗ Carousel autoplay or manual navigation missing
+   ✗ Card layout: should show 1 large landscape card per viewport, not 3-column grid
+   
+   SEVERITY: HIGH - Fundamental layout difference
+
+---
+
+2. FEATURED PROJECTS SECTION (/Users/sandy/riarh-group/src/sections/FeaturedProjects.tsx)
+   ────────────────────────────────────────────────────────────────────────────────────
+   
+   REFERENCE BEHAVIOR:
+   - Shows featured projects in a carousel/carousel-like interface
+   - One project panel visible at viewport height (full-height)
+   - Text overlay changes as carousel advances (different project names/descriptions)
+   - Appears to have carousel pagination or manual controls
+   - Image transitions smoothly between projects
+   
+   REBUILD CURRENT:
+   - Full-bleed stacked panels (one per viewport height: 90vh)
+   - Scroll-linked parallax on image (y: -5% to 5%, scale: 1.02 to 1.06)
+   - Title rises through frame via scroll (titleY: 44px to -44px)
+   - Fade-up animations on text elements
+   - Hover scale on images (1.03)
+   - All 6 featured projects visible in sequence as you scroll
+   
+   MOTION DIFFERENCES:
+   - Reference appears to show projects in a carousel (one at a time)
+   - Rebuild shows all projects stacked vertically
+   - The transition between projects is different (carousel advance vs scroll reveal)
+   
+   POSSIBLE GAPS:
+   ? Carousel behavior vs full-bleed stacked panels - architectural difference
+   ? May need carousel dots/navigation (if reference has carousel)
+   ? Auto-advance on featured projects (if reference does this)
+   
+   SEVERITY: MEDIUM - Different architectural approach but both show projects
+
+---
+
+3. PROJECT DETAIL GALLERY (/Users/sandy/riarh-group/src/pages/ProjectDetail.tsx)
+   ──────────────────────────────────────────────────────────────────────────────
+   
+   REFERENCE BEHAVIOR:
+   - Unable to verify (reference project detail routes return 404)
+   
+   REBUILD CURRENT:
+   - Vertical stacked gallery plates
+   - Adaptive aspect ratio based on image orientation (portrait vs landscape)
+   - Scroll-linked parallax drift on all images (y: -5% to 5%)
+   - Fade-up animations on each plate
+   - Hero image with parallax and gradient overlay
+   - Portrait images centered and width-capped (max-w-[28rem])
+   
+   MOTION ASSESSMENT:
+   - Appears to have solid motion implementation
+   - Scroll parallax on images is consistent with reference approach
+   - Need to verify if reference has any carousel elements in gallery
+   
+   SEVERITY: LOW - Likely matches reference (parallax-based scroll)
+
+---
+
+SUMMARY OF MOTION IMPLEMENTATIONS DETECTED:
+
+REBUILD HAS (✓):
+- Scroll-linked parallax on Featured Projects image (imageY, imageScale via useScrollProgress)
+- Scroll-linked parallax on ProjectDetail gallery images
+- Fade-up animations (whileInView) on text elements
+- Hover image zoom on project cards (1.03-1.04x scale)
+- Grid filter transitions (AnimatePresence with fade/scale)
+- Button hover effects (translate-y, scale)
+- Category filter button state animations
+- Layout animations on grid changes
+
+REBUILD MISSING (✗):
+- Carousel component in Portfolio section (major gap)
+- Carousel pagination dots
+- Carousel auto-advance or manual controls
+- Featured projects carousel behavior (if reference uses carousel)
+
+SECONDARY MOTION PATTERNS TO CHECK:
+- Marquee/scrolling text elements (not detected in reference screenshots)
+- Number counters or counter animations (not visible)
+- Cursor-follow effects (not detected)
+- Staggered cascade reveals (currently using whileInView)
+- Horizontal scroll-snap elements (not visible in reference)
+

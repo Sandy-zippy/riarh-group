@@ -15,14 +15,22 @@ type Project = (typeof PROJECTS)[number]
 const FEATURED: Project[] = PROJECTS.filter((p) => p.slug).slice(0, 6)
 
 function ProjectPanel({ project, index }: { project: Project; index: number }) {
+  // Hooks are called unconditionally (stable order); reduced-motion only changes
+  // the transform OUTPUT ranges below, never which hooks run.
+  const reduce = useReducedMotion()
   const { ref, progress } = useScrollProgress<HTMLDivElement>()
 
   // Vertical drift only, with the lightest possible scale — keeps a 1600px photo
-  // as sharp as it can be full-bleed (heavy zoom was softening it).
-  const imageY = useTransform(progress, [0, 1], ['-5%', '5%'], { ease: EASE })
-  const imageScale = useTransform(progress, [0, 1], [1.02, 1.06], { ease: EASE })
+  // as sharp as it can be full-bleed (heavy zoom was softening it). When the user
+  // prefers reduced motion we park the image at a neutral, static frame: no
+  // drift, no scale, no title rise.
+  const imageY = useTransform(progress, [0, 1], reduce ? ['0%', '0%'] : ['-5%', '5%'], { ease: EASE })
+  const imageScale = useTransform(progress, [0, 1], reduce ? [1, 1] : [1.02, 1.06], { ease: EASE })
   // The title rises through the frame as the panel passes — a reveal, not a slide.
-  const titleY = useTransform(progress, [0, 1], ['44px', '-44px'], { ease: EASE })
+  const titleY = useTransform(progress, [0, 1], reduce ? ['0px', '0px'] : ['44px', '-44px'], { ease: EASE })
+  // Scroll-linked accent line along the panel base — a quiet, Framer-style
+  // progress cue. Parked at full width (a flush divider) under reduced motion.
+  const lineScaleX = useTransform(progress, [0, 1], reduce ? [1, 1] : [0, 1])
 
   return (
     <div
@@ -44,7 +52,7 @@ function ProjectPanel({ project, index }: { project: Project; index: number }) {
           alt={`${project.name}, ${project.scope}`}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:scale-[1.03]"
+          className="h-full w-full object-cover transition-[transform,filter] duration-[900ms] ease-[cubic-bezier(0.44,0,0.56,1)] [transform:translateZ(0)] group-hover:scale-[1.055] group-hover:brightness-[1.06] motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:brightness-100"
         />
       </motion.div>
 
@@ -57,9 +65,10 @@ function ProjectPanel({ project, index }: { project: Project; index: number }) {
       <div className="absolute left-0 top-0 w-full">
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-6 pt-10">
           <span className="eyebrow text-cream/90">Featured Commercial</span>
-          <span className="h-px w-12 bg-accent" />
-          <span className="text-xs uppercase tracking-[0.16em] text-cream/70">
-            {String(index + 1).padStart(2, '0')} / {String(FEATURED.length).padStart(2, '0')}
+          <span className="h-px w-12 origin-left bg-accent transition-[width] duration-500 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:w-16" />
+          <span className="flex items-baseline gap-1.5 text-xs font-medium uppercase tracking-[0.16em] tabular-nums">
+            <span className="text-accent">{String(index + 1).padStart(2, '0')}</span>
+            <span className="text-cream/45">/ {String(FEATURED.length).padStart(2, '0')}</span>
           </span>
         </div>
       </div>
@@ -97,9 +106,25 @@ function ProjectPanel({ project, index }: { project: Project; index: number }) {
           {project.scope}
         </motion.p>
         <span className="mt-6 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-cream/55 transition-colors duration-500 group-hover:text-cream">
-          View projects <span aria-hidden>↗</span>
+          <span className="relative">
+            View projects
+            <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:scale-x-100 motion-reduce:transition-none" />
+          </span>
+          <span
+            aria-hidden
+            className="transition-transform duration-500 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
+          >
+            ↗
+          </span>
         </span>
       </motion.div>
+
+      {/* Scroll-linked accent base line (Framer-style progress cue). */}
+      <motion.div
+        style={{ scaleX: lineScaleX }}
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[2px] origin-left bg-accent/70 will-change-transform"
+      />
     </div>
   )
 }

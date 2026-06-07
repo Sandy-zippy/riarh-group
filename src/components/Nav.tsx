@@ -5,11 +5,31 @@ import { NAV, PHONE, PHONE_TEL } from '../data/site'
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
   useEffect(() => setOpen(false), [pathname])
 
+  // Reference treatment: the header is flush/transparent over the hero, then
+  // resolves to a solid ink bar once the user scrolls (so links stay legible
+  // over the light sections). The menu being open also forces the solid bar.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const solid = scrolled || open
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line/60 bg-ink/70 backdrop-blur-md">
+    <header
+      className={
+        'fixed inset-x-0 top-0 z-50 transition-colors duration-300 ' +
+        (solid
+          ? 'border-b border-line/60 bg-ink/85 backdrop-blur-md'
+          : 'border-b border-transparent bg-transparent')
+      }
+    >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" aria-label="Riarh Group home" className="flex min-h-11 items-center">
           <img
@@ -42,7 +62,7 @@ export default function Nav() {
           </a>
           <Link
             to="/contact-us"
-            className="hidden rounded-full bg-cream px-5 py-2 text-[0.76rem] font-semibold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-accent sm:block"
+            className="hidden rounded-none border border-cream/50 px-6 py-2.5 text-[0.76rem] font-medium uppercase tracking-[0.16em] text-cream transition-colors hover:bg-cream hover:text-ink sm:block"
           >
             Let's Talk
           </Link>

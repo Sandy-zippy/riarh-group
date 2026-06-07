@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { projectBySlug } from './data/site'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -22,9 +23,31 @@ function Stub({ title }: { title: string }) {
   )
 }
 
+// Per-route browser/tab title (Ameya flagged the original's generic/incorrect
+// titles, e.g. the Contact page reading "Your Real Estate Partner"). Each route
+// now gets a unique, accurate title; project pages use the project name.
+const TITLES: Record<string, string> = {
+  '/': 'Riarh Group | Commercial Construction in BC',
+  '/commercial': 'Commercial Construction | Riarh Group',
+  '/services': 'Our Services | Riarh Group',
+  '/about': 'Who We Are | Riarh Group',
+  '/contact-us': 'Contact Riarh Group | Commercial Construction BC',
+  '/privacy-policy': 'Privacy Policy | Riarh Group',
+  '/terms-and-conditions': 'Terms & Conditions | Riarh Group',
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    let title = TITLES[pathname]
+    if (!title) {
+      const m = pathname.match(/^\/commercial\/(.+)$/)
+      const proj = m ? projectBySlug(m[1]) : undefined
+      title = proj ? `${proj.name} | Riarh Group` : 'Riarh Group | Commercial Construction in BC'
+    }
+    document.title = title
+  }, [pathname])
   return null
 }
 

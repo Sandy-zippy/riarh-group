@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { SPRING } from '../motion'
 import { PROJECTS, cardImage } from '../data/site'
 
@@ -11,8 +11,14 @@ const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
 const CATEGORIES = ['All', 'Commercial', 'Industrial', 'Tenant Improvements'] as const
 type Category = (typeof CATEGORIES)[number]
 
+// Subtle per-card stagger for the scroll reveal. Capped so a long grid never
+// drags out the entrance — premium editorial feel, not a domino chain.
+const REVEAL_STAGGER = 0.05
+const REVEAL_MAX_DELAY = 0.4
+
 export default function Portfolio() {
   const [active, setActive] = useState<Category>('All')
+  const reduce = useReducedMotion()
   // Only surface projects with real photography — image-less entries rendered
   // as empty placeholder cards, which read as broken/missing on a premium grid.
   const shown = PROJECTS.filter(
@@ -75,14 +81,19 @@ export default function Portfolio() {
         {/* Grid */}
         <motion.div layout className="mt-12 flex flex-wrap justify-start gap-6">
           <AnimatePresence mode="popLayout">
-            {shown.map((p) => (
+            {shown.map((p, i) => (
               <motion.div
                 key={`${p.name}-${p.location}`}
                 layout
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-60px' }}
                 exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ ...SPRING, duration: 0.4 }}
+                transition={{
+                  ...SPRING,
+                  duration: 0.5,
+                  delay: reduce ? 0 : Math.min(i * REVEAL_STAGGER, REVEAL_MAX_DELAY),
+                }}
                 className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
               >
                 <Link
