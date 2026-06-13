@@ -1,11 +1,11 @@
 export const PHONE = '(604) 849-8324'
 export const PHONE_TEL = '6048498324'
 export const EMAIL = 'info@riarhgroup.com'
-// Contact form backend: our own infra (form-backend/). The form POSTs here to a
-// lead receiver on the ZippyScale VPS (anonymous, HTTPS via Caddy). A gws poller
-// on the Mac then emails info@riarhgroup.com and logs each lead to a Google Sheet.
-// No third-party form service, no submission cap.
-export const FORM_ENDPOINT = 'https://62-72-13-155.nip.io/riarh-lead'
+// Contact form backend: our own Google Apps Script web app (form-backend/).
+// It appends each lead to a Google Sheet and emails info@riarhgroup.com.
+// No third party, no submission cap.
+export const FORM_ENDPOINT =
+  'https://script.google.com/macros/s/AKfycbwM9Uos8Ab-tuIZbOZ6NPPV-L31lRkCcktynyZCX1qG6vDmbNiN0p8XyaOFLB7psl1Cfw/exec'
 // Matches the reference footer (full address kept).
 export const ADDRESS = { line1: '#202 15350 Croydon Dr,', line2: 'Surrey, BC, V3Z 1H4' }
 export const SOCIAL = {

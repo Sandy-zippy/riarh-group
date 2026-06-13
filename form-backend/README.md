@@ -1,18 +1,15 @@
-# Riarh Group — contact form backend
+# Riarh Group — contact form backend (Google Apps Script)
 
-The site is static (GitHub Pages), so form submissions route through our own infra
-(no third-party form service, no submission cap):
+The static site's Contact form POSTs to a Google Apps Script web app bound to the
+**"Riarh Group — Website Leads"** Sheet. On each submission the script appends a
+row to the Sheet and emails **info@riarhgroup.com** (Reply-To = the lead).
+No third-party form service, no submission cap.
 
-```
-website form  ──POST──▶  VPS lead receiver (HTTPS)  ──pulled by──▶  gws poller (Mac)  ──▶  email info@riarhgroup.com + Google Sheet log
-```
+- **Code.gs** — `doPost` handler (Sheet append + email), `setup` (creates Leads tab),
+  `doGet` (health check).
+- **appsscript.json** — web app deployed `ANYONE_ANONYMOUS`, runs as the deploying user.
+- Bound Sheet: `19tDYyIm0kmBDjax6zSyxPLJONN0S7-Wxfgn5v5iuNOE`
+- Script: `1lWLgdK_wRMqZSOK9Zwqy3o_zRonS0vWTvkwI-LRGcEfilOjiYltb2rl4`
 
-- **server.js** — Node lead receiver on the ZippyScale VPS (62.72.13.155).
-  Runs as systemd `riarh-leads` on 127.0.0.1:8787, fronted by Caddy with
-  auto-HTTPS at `https://62-72-13-155.nip.io/riarh-lead`. Buffers leads to
-  `/var/lib/riarh/leads.jsonl`; serves `/pending` (header `X-Auth: <secret>`).
-- **notifier.py** — gws-CLI poller on the Mac (launchd `com.zippyscale.riarh-notifier`,
-  every 2 min). Pulls new leads, emails info@riarhgroup.com (BCC sandy@, Reply-To = lead),
-  appends to the "Leads" Google Sheet. Config + secret in `~/.riarh-notifier/`.
-
-Secrets live in the VPS systemd env and `~/.riarh-notifier/secret` — never in this repo.
+Endpoint URL is set in `src/data/site.ts` (`FORM_ENDPOINT`). Deploying/authorizing
+the web app requires an interactive Google consent by the script owner.
