@@ -5,7 +5,7 @@ export const EMAIL = 'info@riarhgroup.com'
 // It appends each lead to a Google Sheet and emails info@riarhgroup.com.
 // No third party, no submission cap.
 export const FORM_ENDPOINT =
-  'https://script.google.com/macros/s/AKfycbwM9Uos8Ab-tuIZbOZ6NPPV-L31lRkCcktynyZCX1qG6vDmbNiN0p8XyaOFLB7psl1Cfw/exec'
+  'https://script.google.com/macros/s/AKfycbxn4QGo4UFXGynHSAxRfVFfA_BepXUhDqFBODf3TRAwKAG4AjBP2EDu7LcgTjEr8lrTWw/exec'
 // Matches the reference footer (full address kept).
 export const ADDRESS = { line1: '#202 15350 Croydon Dr,', line2: 'Surrey, BC, V3Z 1H4' }
 export const SOCIAL = {
