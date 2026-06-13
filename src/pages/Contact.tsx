@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { SPRING } from '../motion'
-import { PHONE, PHONE_TEL, EMAIL, ADDRESS, SOCIAL } from '../data/site'
+import { PHONE, PHONE_TEL, EMAIL, ADDRESS, SOCIAL, FORM_ENDPOINT } from '../data/site'
 
 const PROJECT_TYPES = [
   'Commercial new build',
@@ -76,6 +76,14 @@ function FacebookIcon() {
     </svg>
   )
 }
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden>
+      <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M7 10v6.5M7 7.2v.01M11 16.5V10m0 2.2c.4-1.2 1.4-2.2 2.8-2.2 1.7 0 2.7 1.1 2.7 3.2v3.3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 const fieldBase =
   'peer w-full rounded-xl border border-line bg-cream/[0.04] px-5 py-4 text-cream placeholder:text-muted outline-none transition-colors focus:border-accent focus:bg-cream/[0.06]'
@@ -95,11 +103,42 @@ export default function Contact() {
   const formRef = useRef<HTMLDivElement>(null)
   const formInView = useInView(formRef, { once: true, margin: '-80px' })
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const reduceMotion = useReducedMotion()
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+    setError(null)
+    setSending(true)
+
+    const form = e.currentTarget
+    // URLSearchParams keeps this a "simple" request (no CORS preflight) so the
+    // Apps Script web app accepts it directly from the browser.
+    const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>)
+
+    try {
+      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body })
+      // Apps Script returns JSON; if parsing is blocked by CORS the POST still
+      // reached the server (sheet + email are the source of truth), so a
+      // resolved request is treated as success.
+      let ok = res.ok
+      try {
+        const json = await res.json()
+        ok = json.success !== false
+      } catch {
+        /* opaque/non-JSON response — request still delivered */
+      }
+      if (ok) {
+        setSubmitted(true)
+      } else {
+        setError('Something went wrong sending your message. Please call us or email ' + EMAIL + '.')
+      }
+    } catch {
+      setError('We could not reach the server. Please check your connection, or email ' + EMAIL + '.')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -215,6 +254,15 @@ export default function Contact() {
             >
               <FacebookIcon />
             </a>
+            <a
+              href={SOCIAL.linkedin}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Riarh Group on LinkedIn"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-cream transition-colors hover:border-accent hover:text-accent"
+            >
+              <LinkedInIcon />
+            </a>
           </motion.div>
         </div>
       </section>
@@ -253,6 +301,8 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+                {/* Web3Forms honeypot — hidden from humans, traps bots */}
+                <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
                 <div>
                   <label htmlFor="name" className={labelBase}>
                     What's Your Name?
@@ -279,7 +329,7 @@ export default function Contact() {
                       id="phone"
                       name="phone"
                       type="tel"
-                      placeholder="+1 604-644-4120"
+                      placeholder="+1 604-849-8324"
                       className={fieldBase}
                     />
                     <FieldSweep />
@@ -348,11 +398,18 @@ export default function Contact() {
                   </div>
                 </div>
 
+                {error && (
+                  <p role="alert" className="body-ref text-sm text-accent">
+                    {error}
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  className="cta-shine mt-2 w-full rounded-full bg-accent px-7 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-ink transition-[transform,box-shadow,filter] duration-200 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-12px_rgba(218,119,52,0.65)] hover:brightness-[1.03] active:scale-[0.97]"
+                  disabled={sending}
+                  className="cta-shine mt-2 w-full rounded-full bg-accent px-7 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-ink transition-[transform,box-shadow,filter] duration-200 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-12px_rgba(218,119,52,0.65)] hover:brightness-[1.03] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
                 >
-                  Book a Consultation Call Now
+                  {sending ? 'Sending…' : 'Book a Consultation Call Now'}
                 </button>
               </form>
             )}

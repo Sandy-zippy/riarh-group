@@ -1,11 +1,17 @@
-export const PHONE = '604-644-4120'
-export const PHONE_TEL = '6046444120'
+export const PHONE = '(604) 849-8324'
+export const PHONE_TEL = '6048498324'
 export const EMAIL = 'info@riarhgroup.com'
+// Contact form backend: our own infra (form-backend/). The form POSTs here to a
+// lead receiver on the ZippyScale VPS (anonymous, HTTPS via Caddy). A gws poller
+// on the Mac then emails info@riarhgroup.com and logs each lead to a Google Sheet.
+// No third-party form service, no submission cap.
+export const FORM_ENDPOINT = 'https://62-72-13-155.nip.io/riarh-lead'
 // Matches the reference footer (full address kept).
 export const ADDRESS = { line1: '#202 15350 Croydon Dr,', line2: 'Surrey, BC, V3Z 1H4' }
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/riarhgroup/',
-  facebook: 'https://www.facebook.com/profile.php?id=61561453983767',
+  facebook: 'https://www.facebook.com/people/Riarh-Group/61590524757047/',
+  linkedin: 'https://www.linkedin.com/company/riarh-group/',
 }
 
 // Order mirrors the reference inline nav: Home, Who We Are, Commercial, Services.

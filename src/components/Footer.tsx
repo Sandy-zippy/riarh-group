@@ -116,6 +116,11 @@ export default function Footer() {
                   Facebook
                 </a>
               </li>
+              <li>
+                <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
+                  LinkedIn
+                </a>
+              </li>
             </ul>
           </motion.div>
         </div>
