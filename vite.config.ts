@@ -4,6 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // GitHub Pages project site → served from /riarh-group/
 export default defineConfig({
-  base: '/riarh-group/',
+  base: '/',
   plugins: [react(), tailwindcss()],
 })

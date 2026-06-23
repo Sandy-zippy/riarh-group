@@ -3,42 +3,42 @@
 /* ── Real brand fonts, self-hosted from the reference site ── */
 @font-face {
   font-family: 'Silver Editorial';
-  src: url('/riarh-group/fonts/silver-editorial.woff2') format('woff2');
+  src: url('/fonts/silver-editorial.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Silver Editorial';
-  src: url('/riarh-group/fonts/silver-editorial-italic.woff2') format('woff2');
+  src: url('/fonts/silver-editorial-italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Acid Grotesk';
-  src: url('/riarh-group/fonts/acid-grotesk-light.woff2') format('woff2');
+  src: url('/fonts/acid-grotesk-light.woff2') format('woff2');
   font-weight: 200 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Acid Grotesk';
-  src: url('/riarh-group/fonts/acid-grotesk-normal.woff2') format('woff2');
+  src: url('/fonts/acid-grotesk-normal.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Acid Grotesk';
-  src: url('/riarh-group/fonts/acid-grotesk-medium.woff2') format('woff2');
+  src: url('/fonts/acid-grotesk-medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Acid Grotesk';
-  src: url('/riarh-group/fonts/acid-grotesk-bold.woff2') format('woff2');
+  src: url('/fonts/acid-grotesk-bold.woff2') format('woff2');
   font-weight: 600 700;
   font-style: normal;
   font-display: swap;
