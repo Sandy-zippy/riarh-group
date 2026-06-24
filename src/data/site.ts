@@ -1,5 +1,5 @@
-export const PHONE = '(604) 849-8324'
-export const PHONE_TEL = '6048498324'
+export const PHONE = '(604) 652-0664'
+export const PHONE_TEL = '6046520664'
 export const EMAIL = 'info@riarhgroup.com'
 // Contact form backend: our own Google Apps Script web app (form-backend/).
 // It appends each lead to a Google Sheet and emails info@riarhgroup.com.

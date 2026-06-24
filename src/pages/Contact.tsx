@@ -329,7 +329,7 @@ export default function Contact() {
                       id="phone"
                       name="phone"
                       type="tel"
-                      placeholder="+1 604-849-8324"
+                      placeholder="Your phone number"
                       className={fieldBase}
                     />
                     <FieldSweep />
