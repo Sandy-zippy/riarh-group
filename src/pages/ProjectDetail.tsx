@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { motion, useTransform } from 'framer-motion'
 import { SPRING } from '../motion'
@@ -13,37 +12,126 @@ const fadeUp = {
   viewport: { once: true, margin: '-80px' as const },
 }
 
+// ── Intrinsic-orientation manifest ──────────────────────────────────────────
+// Each photo's ratio (width / height) is measured from the real photo pack at
+// build time and baked in here, so a plate's orientation is decided
+// deterministically at render — never from a racy img.onLoad measurement (which
+// flipped portraits in and out of landscape boxes depending on load timing).
+// Every gallery except Woodland Veterinary is uniform 1.34 landscape (the
+// DEFAULT_RATIO below); Woodland mixes 1.5 landscape facade/interior shots with
+// 0.667 portrait clinic shots, which are the entries listed explicitly.
+const DEFAULT_RATIO = 1.34
+const PHOTO_RATIOS: Record<string, number> = {
+  'projects/woodland-veterinary/01.jpg': 1.5,
+  'projects/woodland-veterinary/02.jpg': 1.5,
+  'projects/woodland-veterinary/03.jpg': 1.5,
+  'projects/woodland-veterinary/04.jpg': 1.5,
+  'projects/woodland-veterinary/05.jpg': 1.5,
+  'projects/woodland-veterinary/06.jpg': 0.667,
+  'projects/woodland-veterinary/07.jpg': 0.667,
+  'projects/woodland-veterinary/08.jpg': 0.667,
+  'projects/woodland-veterinary/09.jpg': 0.667,
+  'projects/woodland-veterinary/10.jpg': 0.667,
+  'projects/woodland-veterinary/11.jpg': 1.5,
+  'projects/woodland-veterinary/12.jpg': 1.5,
+  'projects/woodland-veterinary/13.jpg': 0.667,
+  'projects/woodland-veterinary/14.jpg': 0.667,
+  'projects/woodland-veterinary/15.jpg': 0.667,
+  'projects/woodland-veterinary/16.jpg': 0.667,
+}
+const ratioOf = (src: string) => PHOTO_RATIOS[src] ?? DEFAULT_RATIO
+const isPortrait = (src: string) => ratioOf(src) < 0.9
+
+// Build the render plan for a gallery. Landscapes span both columns; portraits
+// pair two-per-row; and a lone *trailing* portrait inside an odd-length run is
+// promoted to a full-width centred slot, so a single tall photo can never leave
+// an empty column void beside it. Photo order (front-of-house to back) is
+// preserved exactly.
+type PlatePlan = { src: string; index: number; promoted: boolean }
+function planGallery(gallery: string[]): PlatePlan[] {
+  const plan: PlatePlan[] = []
+  let i = 0
+  while (i < gallery.length) {
+    if (!isPortrait(gallery[i])) {
+      plan.push({ src: gallery[i], index: i, promoted: false })
+      i++
+      continue
+    }
+    // Maximal consecutive run of portraits starting at i.
+    let j = i
+    while (j < gallery.length && isPortrait(gallery[j])) j++
+    const runLen = j - i
+    for (let k = i; k < j; k++) {
+      plan.push({ src: gallery[k], index: k, promoted: runLen % 2 === 1 && k === j - 1 })
+    }
+    i = j
+  }
+  return plan
+}
+
 // A single gallery plate with a light vertical parallax drift, so the project
-// reads as a walkthrough from front-of-house to back-of-house (Dal's requested
-// image order is preserved exactly from the manifest).
-//
-// Each plate adapts to its photo's *natural* orientation, read on load. Mixed
-// galleries (e.g. Woodland Veterinary's tall clinic shots at 1280×1920) used to
-// be jammed into a fixed 16:10 landscape box and hard-cropped top-and-bottom.
-// Now landscape photos keep a wide ratio while portrait photos use a portrait
-// ratio, sit centred, and are width-capped so a tall image can't dominate the
-// viewport — object-cover still prevents any distortion.
-function Plate({ src, alt, eager }: { src: string; alt: string; eager: boolean }) {
+// reads as a walkthrough from front-of-house to back-of-house. Orientation is
+// passed in (from the baked manifest) rather than measured on load, so the
+// layout is identical on every render: landscape photos keep a wide ratio and
+// span both columns, portrait photos use their natural tall ratio and pair up
+// one-per-column, and a promoted lone portrait fills the row centred and
+// width-capped — object-cover still prevents any distortion.
+function Plate({
+  src,
+  alt,
+  eager,
+  ratio,
+  promoted,
+}: {
+  src: string
+  alt: string
+  eager: boolean
+  ratio: number
+  promoted: boolean
+}) {
   const { ref, progress } = useScrollProgress<HTMLDivElement>()
   const y = useTransform(progress, [0, 1], ['-5%', '5%'])
-  const [ratio, setRatio] = useState<number | null>(null)
 
-  const onLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { naturalWidth: w, naturalHeight: h } = e.currentTarget
-    if (w > 0 && h > 0) setRatio(w / h)
+  const portrait = ratio < 0.9
+  // Portrait photos keep their natural (tall) ratio, clamped so they never get
+  // absurdly narrow; landscape photos stay in a wide band around 16:10 / 3:2.
+  const aspect = portrait
+    ? Math.max(ratio, 0.62)
+    : Math.min(Math.max(ratio, 1.3), 1.9)
+
+  const image = (
+    <motion.img
+      src={asset(src)}
+      alt={alt}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      style={{ y }}
+      className="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover"
+    />
+  )
+
+  // Lone trailing portrait (odd run): fill the whole row but keep the photo at
+  // its portrait ratio, centred and width-capped on a dark field. No side void,
+  // no crop into a wide box, and it can't dominate the viewport.
+  if (portrait && promoted) {
+    return (
+      <motion.div
+        {...fadeUp}
+        transition={SPRING}
+        className="relative w-full overflow-hidden rounded-xl bg-ink-2 md:col-span-2"
+      >
+        <div className="mx-auto w-full max-w-[22rem] py-6 md:py-8">
+          <div
+            ref={ref}
+            style={{ aspectRatio: String(aspect) }}
+            className="relative w-full overflow-hidden rounded-lg"
+          >
+            {image}
+          </div>
+        </div>
+      </motion.div>
+    )
   }
-
-  // Treat anything appreciably taller than wide as portrait.
-  const portrait = ratio !== null && ratio < 0.9
-  // Container aspect: portrait photos keep their natural (tall) ratio, clamped
-  // so they never get absurdly narrow; landscape photos stay in a wide band
-  // around 16:10 / 3:2. Before load we assume landscape to avoid layout jump.
-  const aspect =
-    ratio === null
-      ? 16 / 10
-      : portrait
-        ? Math.max(ratio, 0.62)
-        : Math.min(Math.max(ratio, 1.3), 1.9)
 
   return (
     <motion.div
@@ -55,15 +143,7 @@ function Plate({ src, alt, eager }: { src: string; alt: string; eager: boolean }
       }`}
     >
       <div ref={ref} className="absolute inset-0 overflow-hidden">
-        <motion.img
-          src={asset(src)}
-          alt={alt}
-          loading={eager ? 'eager' : 'lazy'}
-          decoding="async"
-          onLoad={onLoad}
-          style={{ y }}
-          className="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover"
-        />
+        {image}
       </div>
     </motion.div>
   )
@@ -187,14 +267,19 @@ export default function ProjectDetail() {
         <div className="mx-auto max-w-7xl px-6 pb-24 md:pb-32">
           {/* Landscapes span the full width; portraits take one column so two
               tall photos pair up side by side instead of floating narrow with
-              voids. Photo order (front-of-house to back) is preserved. */}
+              voids. A lone trailing portrait is promoted to a full-width centred
+              slot so it never leaves an empty column. Orientation is resolved
+              deterministically from the baked manifest (no onLoad race), and
+              photo order (front-of-house to back) is preserved. */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-            {gallery.map((src, i) => (
+            {planGallery(gallery).map(({ src, index, promoted }) => (
               <Plate
                 key={src}
                 src={src}
-                alt={`${project.name}, photo ${i + 1} of ${gallery.length}`}
+                alt={`${project.name}, photo ${index + 1} of ${gallery.length}`}
                 eager={false}
+                ratio={ratioOf(src)}
+                promoted={promoted}
               />
             ))}
           </div>

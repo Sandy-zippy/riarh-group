@@ -15,7 +15,7 @@ export const ADDRESS = { line1: '#202 15350 Croydon Dr,', line2: 'Surrey, BC, V3
 export type Office = { name: string; phone: string; tel: string; line1: string; line2: string }
 export const OFFICES: Office[] = [
   {
-    name: 'British Columbia (Main)',
+    name: 'British Columbia',
     phone: '604-652-0664',
     tel: '6046520664',
     line1: '#202 15350 Croydon Dr,',

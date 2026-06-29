@@ -52,7 +52,7 @@ function ProjectPanel({ project, index }: { project: Project; index: number }) {
           alt={`${project.name}, ${project.scope}`}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition-[transform,filter] duration-[900ms] ease-[cubic-bezier(0.44,0,0.56,1)] [transform:translateZ(0)] group-hover:scale-[1.055] group-hover:brightness-[1.06] motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:brightness-100"
+          className="h-full w-full transform-gpu object-cover transition-[transform,filter] duration-[900ms] ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:scale-[1.055] group-hover:brightness-[1.06] motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:brightness-100"
         />
       </motion.div>
 

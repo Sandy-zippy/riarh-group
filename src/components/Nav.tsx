@@ -126,14 +126,14 @@ export default function Nav() {
                 <Link
                   key={n.to}
                   to={n.to}
-                  className="py-2 text-sm uppercase tracking-[0.14em] text-cream/80 hover:text-accent"
+                  className="flex min-h-[44px] items-center py-2 text-sm uppercase tracking-[0.14em] text-cream/80 hover:text-accent"
                 >
                   {n.label}
                 </Link>
               ))}
               <Link
                 to="/contact-us"
-                className="mt-3 rounded-full bg-cream px-5 py-3 text-center text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-ink"
+                className="mt-3 flex min-h-[44px] items-center justify-center rounded-full bg-cream px-5 py-3 text-center text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-ink"
               >
                 Let's Talk
               </Link>

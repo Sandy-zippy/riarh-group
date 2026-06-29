@@ -115,7 +115,7 @@ function Stat({ value }: { value: string }) {
   }, [inView, reduce, target, mv])
 
   const raisedPlus = plus && (
-    <span className="text-[1.15em] font-medium text-accent" style={{ verticalAlign: '0.04em' }}>
+    <span className="text-[1.3em] font-medium text-accent" style={{ verticalAlign: '0.02em' }}>
       {plus}
     </span>
   )
@@ -189,7 +189,7 @@ function Hero() {
         >
           <img
             src={asset('about-origin.jpg')}
-            alt="Interior of a Riarh Group healthcare pharmacy build"
+            alt="Commercial office interior built by Riarh Group"
             loading="eager"
             decoding="async"
             className="h-full w-full object-cover"
@@ -326,7 +326,7 @@ function Relationships() {
               >
                 We build relationships first.
                 <span className="italic block">
-                  The structures <span style={{ letterSpacing: '0.05em' }}>follow</span><span style={{ marginLeft: '0.1em' }}>.</span>
+                  The structures follow<span style={{ marginLeft: '0.08em' }}>.</span>
                 </span>
               </motion.h2>
               <motion.p

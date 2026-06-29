@@ -143,7 +143,7 @@ export default function Footer() {
               <p className="eyebrow mb-2 lg:min-h-[2.4em]">{o.name}</p>
               <a
                 href={`tel:${o.tel}`}
-                className="inline-flex min-h-[40px] items-center whitespace-nowrap text-sm font-medium text-accent transition-colors hover:text-cream"
+                className="inline-flex min-h-[44px] items-center whitespace-nowrap text-sm font-medium text-accent transition-colors hover:text-cream"
               >
                 {o.phone}
               </a>
