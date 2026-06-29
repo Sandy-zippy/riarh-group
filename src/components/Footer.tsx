@@ -63,40 +63,25 @@ export default function Footer() {
 
       {/* Columns on solid ink */}
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+        {/* Top band: brand + descriptor on the left, link groups on the right */}
+        <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
           <motion.div
             initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={reduce ? { duration: 0 } : { ...SPRING, delay: 0 }}
+            className="max-w-sm"
           >
             <div className="display text-2xl text-cream">
               Riarh<span className="text-accent">.</span>Group
             </div>
-            <a href={`mailto:${EMAIL}`} className="mt-4 inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/55">
+              Commercial construction across British Columbia and Alberta, managed
+              start to finish under one roof.
+            </p>
+            <a href={`mailto:${EMAIL}`} className="mt-5 inline-flex min-h-[44px] items-center text-sm text-cream/80 hover:text-accent">
               {EMAIL}
             </a>
-            {/* Single column at the narrow md (~768) width so office names and
-                phone numbers don't get crushed into two thin columns; two columns
-                returns at lg where the footer column is wide enough. */}
-            <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-              {OFFICES.map((o) => (
-                <div key={o.name}>
-                  <p className="eyebrow mb-2">{o.name}</p>
-                  <a
-                    href={`tel:${o.tel}`}
-                    className="inline-flex min-h-[44px] items-center whitespace-nowrap text-sm font-medium text-accent transition-colors hover:text-cream"
-                  >
-                    {o.phone}
-                  </a>
-                  <p className="mt-1 text-sm leading-relaxed text-cream/55">
-                    {o.line1}
-                    <br />
-                    {o.line2}
-                  </p>
-                </div>
-              ))}
-            </div>
           </motion.div>
 
           <motion.div
@@ -104,45 +89,68 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={reduce ? { duration: 0 } : { ...SPRING, delay: 0.08 }}
+            className="flex gap-16 sm:gap-24"
           >
-            <p className="eyebrow mb-3">Quicklinks</p>
-            <ul>
-              {QUICKLINKS.map((l) => (
-                <li key={l.to}>
-                  <Link to={l.to} className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
-                    {l.label}
-                  </Link>
+            <div>
+              <p className="eyebrow mb-3">Quicklinks</p>
+              <ul>
+                {QUICKLINKS.map((l) => (
+                  <li key={l.to}>
+                    <Link to={l.to} className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="eyebrow mb-3">Follow</p>
+              <ul>
+                <li>
+                  <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                    Instagram
+                  </a>
                 </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={reduce ? { duration: 0 } : { ...SPRING, delay: 0.16 }}
-          >
-            <p className="eyebrow mb-3">Follow</p>
-            <ul>
-              <li>
-                <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
-                  Instagram
-                </a>
-              </li>
-              <li>
-                <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
-                  Facebook
-                </a>
-              </li>
-              <li>
-                <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
-                  LinkedIn
-                </a>
-              </li>
-            </ul>
+                <li>
+                  <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                    Facebook
+                  </a>
+                </li>
+                <li>
+                  <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                    LinkedIn
+                  </a>
+                </li>
+              </ul>
+            </div>
           </motion.div>
         </div>
+
+        {/* Offices: full-width row so addresses breathe and nothing wraps oddly */}
+        <motion.div
+          initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={reduce ? { duration: 0 } : { ...SPRING, delay: 0.12 }}
+          className="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 border-t border-line/60 pt-12 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {OFFICES.map((o) => (
+            <div key={o.name}>
+              <p className="eyebrow mb-2">{o.name}</p>
+              <a
+                href={`tel:${o.tel}`}
+                className="inline-flex min-h-[40px] items-center whitespace-nowrap text-sm font-medium text-accent transition-colors hover:text-cream"
+              >
+                {o.phone}
+              </a>
+              <p className="mt-1.5 text-sm leading-relaxed text-cream/55">
+                {o.line1}
+                <br />
+                {o.line2}
+              </p>
+            </div>
+          ))}
+        </motion.div>
 
         <div className="mt-10 flex flex-col gap-1 border-t border-line/60 pt-5 text-xs text-cream/55 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <span className="py-2">Copyright © {new Date().getFullYear()} | Riarh Group</span>

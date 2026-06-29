@@ -217,19 +217,19 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ ...SPRING, delay: 0.32 }}
-            className="mt-8 grid w-full grid-cols-1 gap-6 text-left sm:grid-cols-2"
+            className="mt-8 grid w-full max-w-xl grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2"
           >
             {OFFICES.map((o) => (
-              <div key={o.name} className="flex flex-col gap-2">
+              <div key={o.name} className="flex flex-col items-center gap-2 text-center">
                 <p className="eyebrow">{o.name}</p>
                 <a
                   href={`tel:${o.tel}`}
-                  className="group inline-flex min-h-[44px] items-center gap-2.5 py-1 text-cream transition-colors hover:text-accent"
+                  className="group inline-flex min-h-[44px] items-center justify-center gap-2.5 py-1 text-cream transition-colors hover:text-accent"
                 >
                   <PhoneIcon />
                   <span className="whitespace-nowrap">{o.phone}</span>
                 </a>
-                <span className="inline-flex items-start gap-2.5 text-cream [&>svg]:mt-0.5 [&>svg]:shrink-0">
+                <span className="inline-flex items-start justify-center gap-2.5 text-cream/85 [&>svg]:mt-0.5 [&>svg]:shrink-0">
                   <PinIcon />
                   <span>
                     {o.line1}
