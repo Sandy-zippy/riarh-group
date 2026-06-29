@@ -5,10 +5,10 @@ import { Marquee } from '../components/premium'
 // communicates breadth with motion. Used on Home and Commercial.
 const SECTORS = [
   'Medical Clinics',
-  'Dental Suites',
+  'Dental Clinics',
+  'Veterinary Clinics',
   'Pharmacies',
-  'Veterinary Build-outs',
-  'Childcare Centres',
+  'DayCares',
   'Restaurants',
   'Retail Storefronts',
   'Corporate Offices',

@@ -30,7 +30,7 @@ export default function CommercialTeaser() {
     >
       {/* Full-bleed background photo */}
       <motion.img
-        src={asset('projects/broadway-towers.jpg')}
+        src={asset('projects/broadway-towers/02.jpg')}
         alt="Commercial build in progress"
         style={{ y: imageY, scale: imageScale }}
         className="absolute inset-x-0 -top-[8%] -z-10 h-[116%] w-full object-cover will-change-transform"

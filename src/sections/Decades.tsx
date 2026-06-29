@@ -41,7 +41,7 @@ function Stat({ value }: { value: string }) {
     <span ref={ref}>
       {Number.isNaN(target) ? base : `${display}${suffix}`}
       {plus && (
-        <span className="text-[0.45em] text-accent" style={{ verticalAlign: '0.55em' }}>
+        <span className="text-[0.62em] text-accent" style={{ verticalAlign: '0.4em' }}>
           {plus}
         </span>
       )}
@@ -70,8 +70,10 @@ export default function Decades() {
             transition={{ ...SPRING, delay: 0.12 }}
             className="body-ref max-w-[33rem] text-cream md:mt-4"
           >
-            Our brand is founded on over 15 years of trusted expertise, built
-            through a solid foundation in construction, design, and development.
+            That experience spans every major commercial sector: commercial,
+            tenant improvement, industrial, hospitality, retail, childcare, and
+            healthcare, giving us the range to handle whatever your project
+            demands.
           </motion.p>
         </div>
 

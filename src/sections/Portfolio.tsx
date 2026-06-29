@@ -45,7 +45,7 @@ export default function Portfolio() {
           transition={{ ...SPRING, delay: 0.08 }}
           className="display display-xl mt-8 max-w-3xl text-cream"
         >
-          Built across every commercial vertical.
+          Built across every commercial sector.
         </motion.h2>
 
         {/* Category filter */}

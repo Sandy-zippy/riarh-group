@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { motion, useTransform } from 'framer-motion'
 import { SPRING } from '../motion'
 import { useScrollProgress } from '../hooks/useScrollProgress'
-import { PHONE, PHONE_TEL } from '../data/site'
 import Portfolio from '../sections/Portfolio'
 import SectorMarquee from '../sections/SectorMarquee'
 import { SpotlightCard } from '../components/premium'
@@ -18,11 +17,11 @@ const CAPABILITIES = [
   },
   {
     title: 'Complex & Specialized Facilities',
-    desc: 'Medical clinics, dental suites, pharmacies, veterinary build-outs, and childcare centres engineered around clinical workflow, infection control, and the inspections that come with them.',
+    desc: 'Specialty environments like healthcare clinics, daycares, and restaurants engineered around real workflows, elevated guest experiences, and the inspections that come with them.',
   },
   {
     title: 'Retail & Office Environments',
-    desc: 'Restaurant fit-outs, retail storefronts, corporate offices, and co-working floors built to open on schedule, with the finish that earns a second visit.',
+    desc: 'Retail storefronts, corporate offices, and co-working floors built to open on schedule, with the finish that earns a second visit.',
   },
 ]
 
@@ -30,7 +29,7 @@ const CAPABILITIES = [
 const STANDARD = [
   {
     title: 'Unmatched Expertise',
-    desc: '15+ years building across every major commercial vertical in BC, from medical and dental to hospitality, retail, and industrial.',
+    desc: '15+ years building across every major commercial sector in BC, from commercial and industrial to hospitality, retail, and healthcare.',
     image: 'medico-head-office.jpg',
   },
   {
@@ -140,7 +139,7 @@ export default function Commercial() {
                 transition={{ ...SPRING, delay: 0.08 }}
                 className="display display-2xl mt-8 max-w-2xl text-ink"
               >
-                We build the commercial spaces that keep businesses{' '}
+                We build commercial spaces that keep businesses{' '}
                 <span className="italic">running.</span>
               </motion.h2>
             </div>
@@ -150,51 +149,27 @@ export default function Commercial() {
               className="lg:pt-10"
             >
               <p className="body-ref max-w-md text-ink/70">
-                From medical clinics and restaurants to retail fit-outs and
-                industrial spaces, if it's commercial and it needs to be done
-                right, that's our lane. Every build is managed in-house, start to
-                finish, with one team accountable for the entire project.
+                From tenant improvements and offices, to restaurants and retail
+                fit-outs, to specialized facilities and industrial spaces, if
+                it's commercial and it needs to be done right, that's our lane.
+                Every build is managed in-house, start to finish, with one team
+                accountable for the entire project.
               </p>
             </motion.div>
           </div>
 
-          {/* Asymmetric bento (Aceternity Bento pattern): a large image-backed
-              feature tile for Tenant Improvements (promoted per Dal) + two
-              smaller cards, each with a cursor spotlight. */}
-          <div className="mt-16 grid gap-4 md:grid-cols-3 md:grid-rows-2">
-            <motion.div
-              {...fadeUp}
-              transition={SPRING}
-              className="md:col-span-2 md:row-span-2"
-            >
-              <SpotlightCard className="group relative h-full min-h-[20rem] rounded-xl ring-1 ring-transparent transition-shadow duration-300 hover:ring-accent/40 hover:shadow-[0_22px_60px_-24px_rgba(218,119,52,0.5)]">
-                <img
-                  src={asset('projects/heal-wellness.jpg')}
-                  alt="Tenant improvement build by Riarh Group"
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.44,0,0.56,1)] group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/10" />
-                <div className="relative flex h-full flex-col justify-end p-8 lg:p-12">
-                  <span className="text-sm tracking-[0.04em] text-accent">01</span>
-                  <h3 className="display mt-4 text-[clamp(1.6rem,2.6vw,2.1rem)] leading-[1.2] text-cream">
-                    {CAPABILITIES[0].title}
-                  </h3>
-                  <p className="body-ref mt-4 max-w-md text-cream/75">
-                    {CAPABILITIES[0].desc}
-                  </p>
-                </div>
-              </SpotlightCard>
-            </motion.div>
-
-            {CAPABILITIES.slice(1).map((c, i) => (
+          {/* Three evenly sized capability cards (uniform text cards, each with
+              a cursor spotlight). Equal-height by stretch so the row reads as a
+              clean, balanced set rather than one promoted tile. */}
+          <div className="mt-16 grid items-stretch gap-4 md:grid-cols-3">
+            {CAPABILITIES.map((c, i) => (
               <motion.div
                 key={c.title}
                 {...fadeUp}
-                transition={{ ...SPRING, delay: (i + 1) * 0.08 }}
+                transition={{ ...SPRING, delay: i * 0.08 }}
               >
                 <SpotlightCard className="flex h-full flex-col rounded-xl border border-ink/10 bg-cream p-8 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_12px_34px_-16px_rgba(218,119,52,0.4)] lg:p-9">
-                  <span className="text-sm tracking-[0.04em] text-accent">0{i + 2}</span>
+                  <span className="text-sm tracking-[0.04em] text-accent">0{i + 1}</span>
                   <h3 className="display mt-4 text-[1.4rem] leading-[1.3] text-ink">
                     {c.title}
                   </h3>
@@ -240,8 +215,9 @@ export default function Commercial() {
               transition={{ ...SPRING, delay: 0.08 }}
               className="display display-2xl mt-8 text-cream"
             >
-              In business, time is capital.{' '}
-              <span className="italic">We respect both.</span>
+              In business, time is capital.
+              <br />
+              <span className="italic tracking-[0.01em]">We respect both.</span>
             </motion.h2>
             <motion.p
               {...fadeUp}
@@ -323,7 +299,7 @@ export default function Commercial() {
             className="display display-xl mx-auto max-w-3xl text-cream"
           >
             Transform your commercial vision{' '}
-            <span className="italic">into reality.</span>
+            <span className="italic tracking-[0.01em]">into reality.</span>
           </motion.h2>
           <motion.p
             {...fadeUp}
@@ -344,12 +320,6 @@ export default function Commercial() {
             >
               Start Your Project
             </Link>
-            <a
-              href={`tel:${PHONE_TEL}`}
-              className="inline-flex w-full items-center justify-center rounded-full border border-cream/40 px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-cream transition-colors hover:bg-cream hover:text-ink sm:w-auto"
-            >
-              Call {PHONE}
-            </a>
           </motion.div>
         </div>
       </section>

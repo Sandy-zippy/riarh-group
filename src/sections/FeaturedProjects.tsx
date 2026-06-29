@@ -158,7 +158,9 @@ export default function FeaturedProjects() {
           transition={{ ...SPRING, delay: 0.08 }}
           className="display display-xl mt-8 max-w-4xl text-balance text-cream"
         >
-          Built for Growth, across every commercial vertical.
+          Built for Growth,
+          <br />
+          Across every commercial sector.
         </motion.h2>
       </div>
 

@@ -34,7 +34,7 @@ const VALUES = [
   },
   {
     title: 'Ownership',
-    desc: 'We do not pass the buck to subcontractors. One team takes radical responsibility for the outcome, from the first drawing to the final walkthrough.',
+    desc: 'We accept full accountability for our subcontractors. One team takes radical responsibility for the outcome, from the first drawing to the final walkthrough.',
   },
   {
     title: 'Innovation',
@@ -53,15 +53,15 @@ const TEAM = [
     desc: 'Sets the standard and stays close to every build from first drawing to final walkthrough.',
   },
   {
-    name: 'Terry Sihota',
+    name: 'Terry S',
     initials: 'TS',
-    role: 'Project Manager',
+    role: 'Operations Manager',
     desc: 'Keeps each project on scope, on budget, and on schedule with disciplined day-to-day oversight.',
   },
   {
-    name: 'Rochelle',
-    initials: 'R',
-    role: 'Project Coordinator',
+    name: 'Rochelle L',
+    initials: 'RL',
+    role: 'Business Manager',
     desc: 'Aligns crews, clients, and timelines so every detail moves through the build without friction.',
   },
 ]
@@ -148,15 +148,6 @@ function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink">
       <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-12 md:pt-28 md:pb-16">
-        {/* Aurora: one very low-opacity warm radial behind the heading only. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-12 left-0 h-[460px] w-[680px] max-w-full"
-          style={{
-            background:
-              'radial-gradient(ellipse at top left, rgba(218,119,52,0.10), rgba(218,119,52,0) 70%)',
-          }}
-        />
         <motion.div
           {...enter}
           transition={SPRING}
@@ -197,8 +188,8 @@ function Hero() {
           className="absolute inset-x-0 -top-[8%] h-[116%] w-full will-change-transform"
         >
           <img
-            src={asset('projects/hero-about.jpg')}
-            alt="Inside Riarh Group's own headquarters in Vancouver"
+            src={asset('projects/happy-prairie-pharmacy/01.jpg')}
+            alt="Interior of a Riarh Group healthcare pharmacy build"
             loading="eager"
             decoding="async"
             className="h-full w-full object-cover"
@@ -334,7 +325,9 @@ function Relationships() {
                 className="display display-xl mt-8 max-w-lg text-cream"
               >
                 We build relationships first.
-                <span className="italic block">The structures follow.</span>
+                <span className="italic block">
+                  The structures follow<span style={{ marginLeft: '0.03em' }}>.</span>
+                </span>
               </motion.h2>
               <motion.p
                 {...enter}
@@ -361,8 +354,8 @@ function Relationships() {
                   className="absolute inset-x-0 -top-[7%] h-[114%] w-full will-change-transform"
                 >
                   <img
-                    src={asset('projects/co-working-space.jpg')}
-                    alt="Riarh Group team reviewing a commercial project"
+                    src={asset('projects/co-working-space/03.jpg')}
+                    alt="A Riarh Group co-working office build with glass partitions"
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover"
@@ -408,21 +401,6 @@ function Founder() {
               >
                 Founder &amp; CEO
               </motion.p>
-              {/* Founder headshot — closes the trust gap Ameya flagged. Real
-                  photo of Dal (from the reference), cropped to a portrait. */}
-              <motion.div
-                {...enter}
-                transition={{ ...SPRING, delay: 0.22 }}
-                className="relative mt-8 aspect-[4/5] max-w-[18rem] overflow-hidden rounded-xl ring-1 ring-line"
-              >
-                <img
-                  src={asset('projects/dal-ceo-portrait.jpg')}
-                  alt="Dal Riarh, Founder and CEO of Riarh Group"
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover object-[center_38%]"
-                />
-              </motion.div>
             </div>
 
             <div className="max-w-2xl space-y-6 md:pt-2">
@@ -561,8 +539,8 @@ function Ethos() {
                   className="absolute inset-x-0 -top-[6%] h-[112%] w-full will-change-transform"
                 >
                   <img
-                    src={asset('projects/law-firm.jpg')}
-                    alt="Interior of a Riarh Group commercial build"
+                    src={asset('projects/law-firm/06.jpg')}
+                    alt="A Riarh Group corporate office build with skyline views"
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover"
@@ -616,7 +594,9 @@ function CTA() {
           className="display display-xl mt-8 max-w-2xl text-balance text-ink"
         >
           We do not just hire workers. We recruit{' '}
-          <span className="italic">problem solvers.</span>
+          <span className="italic">
+            problem <span style={{ letterSpacing: '0.015em' }}>solvers.</span>
+          </span>
         </motion.h2>
         <motion.p
           {...enter}

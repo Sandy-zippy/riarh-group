@@ -13,6 +13,12 @@ import ProjectDetail from './pages/ProjectDetail'
 import Contact from './pages/Contact'
 import { Privacy, Terms } from './pages/Legal'
 
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[]
+  }
+}
+
 function Stub({ title }: { title: string }) {
   return (
     <section className="flex min-h-[70vh] items-center justify-center px-6">
@@ -53,6 +59,18 @@ function ScrollToTop() {
   return null
 }
 
+// SPA navigations don't trigger a fresh page load, so push a pageview to the
+// GTM dataLayer on every route change (HashRouter → location.pathname is the
+// in-app path, e.g. "/about"). GA4 reads this via the GTM container in index.html.
+function Pageviews() {
+  const { pathname, search } = useLocation()
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ event: 'pageview', page_path: pathname + search })
+  }, [pathname, search])
+  return null
+}
+
 // A subtle cross-route fade/rise so navigation feels like one continuous product
 // rather than hard page loads. Keyed by pathname; instant under reduced motion.
 function AnimatedRoutes() {
@@ -88,6 +106,7 @@ export default function App() {
     <>
       <ScrollProgressBar />
       <ScrollToTop />
+      <Pageviews />
       <Nav />
       <main className="pt-16">
         <AnimatedRoutes />

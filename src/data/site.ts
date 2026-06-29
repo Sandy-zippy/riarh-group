@@ -8,6 +8,41 @@ export const FORM_ENDPOINT =
   'https://script.google.com/macros/s/AKfycbxn4QGo4UFXGynHSAxRfVFfA_BepXUhDqFBODf3TRAwKAG4AjBP2EDu7LcgTjEr8lrTWw/exec'
 // Matches the reference footer (full address kept).
 export const ADDRESS = { line1: '#202 15350 Croydon Dr,', line2: 'Surrey, BC, V3Z 1H4' }
+
+// Regional offices (number paired with address). Surfaced in the Footer and on
+// the Contact page. PHONE/PHONE_TEL above stay the BC main line for components
+// that expect a single number.
+export type Office = { name: string; phone: string; tel: string; line1: string; line2: string }
+export const OFFICES: Office[] = [
+  {
+    name: 'British Columbia (Main)',
+    phone: '604-652-0664',
+    tel: '6046520664',
+    line1: '#202 15350 Croydon Dr,',
+    line2: 'Surrey, BC V3Z 1H4',
+  },
+  {
+    name: 'Vancouver Island',
+    phone: '778-401-0664',
+    tel: '7784010664',
+    line1: '#185 - 911 Yates St,',
+    line2: 'Victoria, BC V8V 4Y9',
+  },
+  {
+    name: 'Edmonton',
+    phone: '587-407-2242',
+    tel: '5874072242',
+    line1: '#38 314-222 Baseline Road',
+    line2: 'Sherwood Park, AB T8H 1S8',
+  },
+  {
+    name: 'Calgary',
+    phone: '587-324-2242',
+    tel: '5873242242',
+    line1: '#301 14 St NW #309,',
+    line2: 'Calgary, AB T2N 1Z7',
+  },
+]
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/riarhgroup/',
   facebook: 'https://www.facebook.com/people/Riarh-Group/61590524757047/',
@@ -18,12 +53,12 @@ export const SOCIAL = {
 export const NAV = [
   { label: 'Home', to: '/' },
   { label: 'Who We Are', to: '/about' },
-  { label: 'Commercial', to: '/commercial' },
+  { label: 'Portfolio', to: '/commercial' },
   { label: 'Services', to: '/services' },
 ]
 
 export const STATS: [string, string][] = [
-  ['100K+', 'Sq. Ft. constructed'],
+  ['100K+', 'sq. ft. constructed'],
   ['50+', 'Units Built'],
   ['15+', 'Years of experience'],
 ]
@@ -40,7 +75,7 @@ export const WHY = [
   },
   {
     title: 'Built on 15+ years of commercial experience',
-    desc: "From medical clinics to restaurants to childcare, we've built across every major commercial vertical in BC.",
+    desc: "From medical clinics to restaurants to childcare, we've built across every major commercial sector in BC.",
   },
 ]
 
@@ -111,7 +146,7 @@ export const PROJECTS: Project[] = [
   // Existing Medico builds (kept on site; no gallery pack supplied, so no detail page)
   { name: 'Coquitlam Animal Hospital', location: 'Coquitlam, BC', sector: 'Tenant Improvements', scope: 'Veterinary medical build-out' },
   { name: 'Smile Plus Dentistry', location: 'Surrey, BC', sector: 'Tenant Improvements', scope: '2,840 sq ft dental fit-out' },
-  { name: 'Woodland Veterinary Clinic', slug: 'woodland-veterinary', location: 'Vancouver, BC', sector: 'Tenant Improvements', scope: '2,200 sq ft veterinary clinic' },
+  { name: 'Woodland Veterinary Clinic', slug: 'woodland-veterinary', location: 'Vancouver, BC', sector: 'Tenant Improvements', scope: '2,200 sq. ft veterinary clinic' },
 ]
 
 // Lookup helper for the project detail route.

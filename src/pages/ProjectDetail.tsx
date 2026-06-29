@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { motion, useTransform } from 'framer-motion'
 import { SPRING } from '../motion'
 import { useScrollProgress } from '../hooks/useScrollProgress'
-import { GALLERIES, PHONE, PHONE_TEL, projectBySlug } from '../data/site'
+import { GALLERIES, projectBySlug } from '../data/site'
 
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
 
@@ -98,7 +98,6 @@ export default function ProjectDetail() {
   }
 
   const hero = gallery[0]
-  const rest = gallery.slice(1)
 
   return (
     <>
@@ -170,8 +169,8 @@ export default function ProjectDetail() {
               transition={{ ...SPRING, delay: 0.1 }}
               className="display max-w-xl text-[clamp(1.5rem,2.6vw,2rem)] leading-snug text-cream"
             >
-              A {project.scope.toLowerCase()} delivered in-house from first
-              blueprint to final walkthrough, managed by one accountable team.
+              A {project.scope.toLowerCase()} from first blueprint to final
+              walkthrough, managed by one accountable team.
             </motion.p>
           </div>
         </div>
@@ -181,46 +180,15 @@ export default function ProjectDetail() {
       <section className="bg-ink">
         <div className="mx-auto max-w-7xl px-6 pb-24 md:pb-32">
           <div className="flex flex-col gap-6 md:gap-8">
-            {rest.map((src, i) => (
+            {gallery.map((src, i) => (
               <Plate
                 key={src}
                 src={src}
-                alt={`${project.name}, photo ${i + 2} of ${gallery.length}`}
+                alt={`${project.name}, photo ${i + 1} of ${gallery.length}`}
                 eager={false}
               />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="bg-cream text-ink">
-        <div className="mx-auto max-w-3xl px-6 py-20 text-center md:py-28">
-          <motion.h2
-            {...fadeUp}
-            transition={SPRING}
-            className="display display-xl text-ink"
-          >
-            Planning a build like this?
-          </motion.h2>
-          <motion.div
-            {...fadeUp}
-            transition={{ ...SPRING, delay: 0.1 }}
-            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-          >
-            <Link
-              to="/contact-us"
-              className="cta-shine inline-flex w-full justify-center rounded-full bg-accent px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-ink transition-transform duration-200 ease-[cubic-bezier(0.44,0,0.56,1)] hover:-translate-y-0.5 active:scale-[0.97] sm:w-auto"
-            >
-              Start Your Project
-            </Link>
-            <a
-              href={`tel:${PHONE_TEL}`}
-              className="inline-flex w-full items-center justify-center rounded-full border border-ink/30 px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-ink hover:text-cream sm:w-auto"
-            >
-              Call {PHONE}
-            </a>
-          </motion.div>
         </div>
       </section>
     </>

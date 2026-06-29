@@ -1,13 +1,13 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { ADDRESS, EMAIL, PHONE, PHONE_TEL, SOCIAL } from '../data/site'
+import { Link, useLocation } from 'react-router-dom'
+import { EMAIL, OFFICES, SOCIAL } from '../data/site'
 import { SPRING } from '../motion'
 
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
 
 const QUICKLINKS = [
   { label: 'Home', to: '/' },
-  { label: 'Commercial', to: '/commercial' },
+  { label: 'Portfolio', to: '/commercial' },
   { label: 'Services', to: '/services' },
   { label: 'Who We Are', to: '/about' },
   { label: 'Contact Us', to: '/contact-us' },
@@ -15,11 +15,17 @@ const QUICKLINKS = [
 
 export default function Footer() {
   const reduce = useReducedMotion()
+  const { pathname } = useLocation()
+  // The Commercial/Portfolio page has its own "Transform your commercial vision"
+  // CTA band, so suppress this global closing CTA there to avoid two stacked
+  // action bands. It stays on every other route (incl. project detail pages).
+  const showCta = pathname !== '/commercial'
 
   return (
     <footer className="bg-ink">
       {/* Photo-backed CTA band (reference treatment): a project interior behind
           a dark scrim, with the closing call-to-action over it. */}
+      {showCta && (
       <div className="relative overflow-hidden border-t border-line/60">
         <img
           src={asset('projects/co-working-space.jpg')}
@@ -53,6 +59,7 @@ export default function Footer() {
           </motion.div>
         </div>
       </div>
+      )}
 
       {/* Columns on solid ink */}
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-16">
@@ -66,18 +73,27 @@ export default function Footer() {
             <div className="display text-2xl text-cream">
               Riarh<span className="text-accent">.</span>Group
             </div>
-            <p className="mt-5 text-sm leading-relaxed text-cream/55">
-              {ADDRESS.line1}
-              <br />
-              {ADDRESS.line2}
-            </p>
-            <a href={`mailto:${EMAIL}`} className="mt-2 inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
+            <a href={`mailto:${EMAIL}`} className="mt-4 inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
               {EMAIL}
             </a>
-            <br />
-            <a href={`tel:${PHONE_TEL}`} className="inline-flex items-center py-2 text-lg font-medium text-accent transition-colors hover:text-cream">
-              {PHONE}
-            </a>
+            <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {OFFICES.map((o) => (
+                <div key={o.name}>
+                  <p className="eyebrow mb-2">{o.name}</p>
+                  <a
+                    href={`tel:${o.tel}`}
+                    className="inline-flex items-center text-sm font-medium text-accent transition-colors hover:text-cream"
+                  >
+                    {o.phone}
+                  </a>
+                  <p className="mt-1 text-sm leading-relaxed text-cream/55">
+                    {o.line1}
+                    <br />
+                    {o.line2}
+                  </p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div

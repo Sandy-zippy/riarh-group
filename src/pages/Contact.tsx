@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { SPRING } from '../motion'
-import { PHONE, PHONE_TEL, EMAIL, ADDRESS, SOCIAL, FORM_ENDPOINT } from '../data/site'
+import { EMAIL, OFFICES, SOCIAL, FORM_ENDPOINT } from '../data/site'
 
 const PROJECT_TYPES = [
   'Commercial new build',
@@ -196,7 +196,7 @@ export default function Contact() {
             one business day.
           </motion.p>
 
-          {/* Contact detail rows (Dal copy): phone, email, address */}
+          {/* Contact detail rows (Dal copy): shared email, then each regional office */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -205,27 +205,42 @@ export default function Contact() {
             className="mt-10 flex flex-col items-center gap-4"
           >
             <a
-              href={`tel:${PHONE_TEL}`}
-              className="group inline-flex items-center gap-2.5 text-cream transition-colors hover:text-accent"
-            >
-              <PhoneIcon />
-              <span>{PHONE}</span>
-            </a>
-            <a
               href={`mailto:${EMAIL}`}
               className="group inline-flex max-w-full items-center gap-2.5 break-words text-cream transition-colors hover:text-accent"
             >
               <MailIcon />
               <span>{EMAIL}</span>
             </a>
-            <span className="inline-flex items-start gap-2.5 text-cream [&>svg]:mt-0.5 [&>svg]:shrink-0">
-              <PinIcon />
-              <span>
-                {ADDRESS.line1}
-                <br />
-                {ADDRESS.line2}
-              </span>
-            </span>
+          </motion.div>
+
+          {/* Regional offices: phone paired with address */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ ...SPRING, delay: 0.32 }}
+            className="mt-8 grid w-full grid-cols-1 gap-6 text-left sm:grid-cols-2"
+          >
+            {OFFICES.map((o) => (
+              <div key={o.name} className="flex flex-col gap-2">
+                <p className="eyebrow">{o.name}</p>
+                <a
+                  href={`tel:${o.tel}`}
+                  className="group inline-flex items-center gap-2.5 text-cream transition-colors hover:text-accent"
+                >
+                  <PhoneIcon />
+                  <span>{o.phone}</span>
+                </a>
+                <span className="inline-flex items-start gap-2.5 text-cream [&>svg]:mt-0.5 [&>svg]:shrink-0">
+                  <PinIcon />
+                  <span>
+                    {o.line1}
+                    <br />
+                    {o.line2}
+                  </span>
+                </span>
+              </div>
+            ))}
           </motion.div>
 
           {/* Social */}
@@ -233,7 +248,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ ...SPRING, delay: 0.32 }}
+            transition={{ ...SPRING, delay: 0.4 }}
             className="mt-8 flex items-center gap-4"
           >
             <a

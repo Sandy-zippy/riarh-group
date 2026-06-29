@@ -67,15 +67,6 @@ export default function StickyPhases({ phases }: { phases: Phase[] }) {
                     />
                   ))}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
-                  {/* Big index numeral */}
-                  <div className="absolute bottom-6 left-6">
-                    <span className="display text-[clamp(3rem,6vw,5rem)] leading-none text-cream">
-                      {phases[active].num.replace('.', '')}
-                    </span>
-                    <span className="ml-2 text-cream/60">
-                      / 0{phases.length}
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -89,26 +80,14 @@ export default function StickyPhases({ phases }: { phases: Phase[] }) {
                   className="absolute left-0 top-0 h-full w-px origin-top bg-accent"
                 />
               </div>
-              {phases.map((p, i) => (
+              {phases.map((p) => (
                 <div
-                  key={p.num}
+                  key={p.lead}
                   className="flex min-h-[78vh] flex-col justify-center pl-10"
                 >
-                  <div className="flex items-center gap-4">
-                    <span
-                      className={
-                        'flex h-9 w-9 items-center justify-center rounded-full border text-sm transition-colors duration-500 ' +
-                        (active === i
-                          ? 'border-accent bg-accent text-ink'
-                          : 'border-ink/25 text-ink/50')
-                      }
-                    >
-                      {i + 1}
-                    </span>
-                    <span className="text-sm uppercase tracking-[0.16em] text-accent">
-                      {p.num} {p.title}
-                    </span>
-                  </div>
+                  <span className="block text-sm uppercase tracking-[0.16em] text-accent">
+                    {p.title}
+                  </span>
                   <h3 className="display mt-7 max-w-md text-[clamp(1.6rem,2.6vw,2rem)] leading-snug text-ink">
                     {p.lead}
                   </h3>
@@ -123,7 +102,7 @@ export default function StickyPhases({ phases }: { phases: Phase[] }) {
         <div className="flex flex-col gap-20 py-24 lg:hidden">
           {phases.map((p, i) => (
             <motion.div
-              key={p.num}
+              key={p.lead}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
@@ -138,7 +117,7 @@ export default function StickyPhases({ phases }: { phases: Phase[] }) {
                 />
               </div>
               <span className="mt-6 block text-sm uppercase tracking-[0.16em] text-accent">
-                {p.num} {p.title}
+                {p.title}
               </span>
               <h3 className="display mt-3 text-[clamp(1.5rem,6vw,1.9rem)] leading-snug text-ink">
                 {p.lead}

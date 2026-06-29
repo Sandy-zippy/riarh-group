@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { SPRING } from '../motion'
-import { PROJECTS, HERO_IMAGE, cardImage } from '../data/site'
+import { PROJECTS, cardImage } from '../data/site'
 import StickyPhases from '../components/StickyPhases'
 
 const BASE = import.meta.env.BASE_URL
 
-// ── The three delivery phases, mirroring the reference (Planning / Designing /
-// Construction). Copy is on brand and reflects real commercial practice — no
-// unverified claims. Images reuse real project photography from Dal's pack. ──
+// ── The three delivery phases (Planning / Design / Construction). The short
+// word carries the visual weight as the black primary headline (`lead`); the
+// descriptive sentence sits above it as the small orange subheading (`title`).
+// Numbers are intentionally dropped (`num` empty). Copy is on brand and
+// reflects real commercial practice, no unverified claims. Images reuse real
+// project photography from Dal's pack. ──
 type Phase = {
   num: string
   title: string
@@ -19,23 +22,23 @@ type Phase = {
 
 const PHASES: Phase[] = [
   {
-    num: '01.',
-    title: 'Planning',
-    lead: 'Mitigating risk before ground is broken.',
+    num: '',
+    title: 'Mitigating risk before ground is broken',
+    lead: 'Planning',
     desc: 'We anchor every project in data. From feasibility studies to pro-forma budgeting and constructability reviews, we identify constraints early so we can protect your capital and accelerate your timeline.',
     image: 'law-firm.jpg',
   },
   {
-    num: '02.',
-    title: 'Designing',
-    lead: 'Bridging architectural intent with physical reality.',
+    num: '',
+    title: 'Bridging architectural intent with physical reality',
+    lead: 'Design',
     desc: 'Collaborative coordination with architects and engineers. We apply value engineering to optimize cost without compromising the integrity of the design vision, so the drawings and the budget stay in lockstep.',
     image: 'co-working-space.jpg',
   },
   {
-    num: '03.',
-    title: 'Construction',
-    lead: 'Precision execution and rigorous site logistics.',
+    num: '',
+    title: 'Precision execution and rigorous site logistics',
+    lead: 'Construction',
     desc: 'Active management of the critical path. Our site superintendents enforce strict quality controls and safety protocols, ensuring a build that meets the highest standards of durability and finish.',
     image: 'broadway-towers.jpg',
   },
@@ -65,44 +68,9 @@ export default function Services() {
 
   return (
     <>
-      {/* ── HERO ── */}
+      {/* ── OUR SERVICES — opening statement band (clears the fixed nav) ── */}
       <section className="relative overflow-hidden bg-ink text-cream">
-        {/* Photo banner — clears the fixed nav via the pt below */}
-        <div className="relative">
-          <div className="absolute inset-0">
-            <img
-              src={`${BASE}${HERO_IMAGE}`}
-              alt=""
-              aria-hidden
-              className="h-full w-full object-cover opacity-60"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/20" />
-          </div>
-
-          <div className="relative mx-auto flex min-h-[52vh] max-w-7xl flex-col justify-end px-6 pb-14 pt-28 md:min-h-[58vh] md:pb-20">
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={SPRING}
-              className="display display-xl max-w-3xl text-cream"
-            >
-              The Science of <span className="italic">Building.</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ ...SPRING, delay: 0.08 }}
-              className="mt-5 max-w-xl body-ref text-cream/80"
-            >
-              We manage complex commercial builds from start to finish.
-            </motion.p>
-          </div>
-        </div>
-
-        {/* Giant statement band */}
-        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pb-32 md:pt-24">
+        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-32 md:pb-32 md:pt-40">
           {/* Aurora — one very low-opacity warm radial behind the heading. */}
           <div
             aria-hidden
@@ -131,8 +99,8 @@ export default function Services() {
             transition={{ ...SPRING, delay: 0.08 }}
             className="display display-hero relative mx-auto mt-10 max-w-5xl text-center text-cream"
           >
-            From first <span className="italic">plans</span> to final{' '}
-            <span className="italic">walkthrough</span>
+            First initial <span className="italic pr-[0.06em]">plans</span> to
+            final <span className="italic">walkthrough.</span>
           </motion.h2>
 
           <motion.p

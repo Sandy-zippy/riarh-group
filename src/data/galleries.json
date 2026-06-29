@@ -3,7 +3,6 @@
     "projects/broadway-towers/01.jpg",
     "projects/broadway-towers/02.jpg",
     "projects/broadway-towers/03.jpg",
-    "projects/broadway-towers/04.jpg",
     "projects/broadway-towers/05.jpg",
     "projects/broadway-towers/06.jpg",
     "projects/broadway-towers/07.jpg",
@@ -91,15 +90,14 @@
     "projects/mucho-burrito-burnaby/12.jpg"
   ],
   "ignis-gale": [
+    "projects/ignis-gale/05.jpg",
     "projects/ignis-gale/01.jpg",
     "projects/ignis-gale/02.jpg",
     "projects/ignis-gale/03.jpg",
     "projects/ignis-gale/04.jpg",
-    "projects/ignis-gale/05.jpg",
     "projects/ignis-gale/06.jpg",
     "projects/ignis-gale/07.jpg",
-    "projects/ignis-gale/08.jpg",
-    "projects/ignis-gale/09.jpg"
+    "projects/ignis-gale/08.jpg"
   ],
   "happy-prairie-pharmacy": [
     "projects/happy-prairie-pharmacy/01.jpg",
@@ -157,8 +155,6 @@
     "projects/co-working-space/06.jpg"
   ],
   "woodland-veterinary": [
-    "projects/woodland-veterinary/01.jpg",
-    "projects/woodland-veterinary/02.jpg",
     "projects/woodland-veterinary/03.jpg",
     "projects/woodland-veterinary/04.jpg",
     "projects/woodland-veterinary/05.jpg",
@@ -172,6 +168,8 @@
     "projects/woodland-veterinary/13.jpg",
     "projects/woodland-veterinary/14.jpg",
     "projects/woodland-veterinary/15.jpg",
-    "projects/woodland-veterinary/16.jpg"
+    "projects/woodland-veterinary/16.jpg",
+    "projects/woodland-veterinary/01.jpg",
+    "projects/woodland-veterinary/02.jpg"
   ]
 }
