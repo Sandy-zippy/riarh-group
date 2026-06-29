@@ -113,27 +113,32 @@ export default function Contact() {
     setSending(true)
 
     const form = e.currentTarget
-    // URLSearchParams keeps this a "simple" request (no CORS preflight) so the
-    // Apps Script web app accepts it directly from the browser.
+    // URLSearchParams keeps this a "simple" CORS request (no preflight), so the
+    // Apps Script web app accepts it and returns a readable JSON response.
     const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>)
 
+    const failMsg =
+      'We could not send your message. Please try again, or reach us directly at ' +
+      EMAIL +
+      ' or ' +
+      OFFICES[0].phone +
+      '.'
+
     try {
-      // Apps Script web apps don't return CORS headers, so we POST in no-cors
-      // mode: the request is still delivered (the sheet + notification email are
-      // the source of truth) but the response is opaque and can't be read. A
-      // resolved fetch means the submission left the browser; only a thrown
-      // network error (offline, blocked, DNS) means it never sent — and that is
-      // the only case where we must NOT show the "Thank you" state.
-      await fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', body })
-      setSubmitted(true)
+      // The backend returns { success: true } only after it appends the lead to
+      // the Sheet and sends the notification email. We read that confirmation and
+      // ONLY show "Thank you." on an explicit success — a resolved fetch alone is
+      // not proof of delivery. A non-success payload or a thrown network error
+      // (offline, blocked, DNS) both surface the retry/error state instead.
+      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body })
+      const data = (await res.json().catch(() => null)) as { success?: boolean } | null
+      if (res.ok && data?.success) {
+        setSubmitted(true)
+      } else {
+        setError(failMsg)
+      }
     } catch {
-      setError(
-        'We could not send your message. Please check your connection and try again, or reach us directly at ' +
-          EMAIL +
-          ' or ' +
-          OFFICES[0].phone +
-          '.',
-      )
+      setError(failMsg)
     } finally {
       setSending(false)
     }
@@ -314,7 +319,7 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-                {/* Web3Forms honeypot — hidden from humans, traps bots */}
+                {/* Honeypot — hidden from humans; if a bot fills it, Code.gs (botcheck) silently drops the submission */}
                 <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
                 <div>
                   <label htmlFor="name" className={labelBase}>
