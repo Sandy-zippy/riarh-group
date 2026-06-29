@@ -99,7 +99,7 @@ export default function Services() {
             transition={{ ...SPRING, delay: 0.08 }}
             className="display display-hero relative mx-auto mt-10 max-w-5xl text-center text-cream"
           >
-            First initial <span className="italic pr-[0.06em]">plans</span> to
+            First initial <span className="italic px-[0.12em]">plans</span> to
             final <span className="italic">walkthrough.</span>
           </motion.h2>
 

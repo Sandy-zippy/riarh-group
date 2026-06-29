@@ -217,7 +217,7 @@ export default function Commercial() {
             >
               In business, time is capital.
               <br />
-              <span className="italic tracking-[0.01em]">We respect both.</span>
+              <span className="italic tracking-[0.08em]">We respect both.</span>
             </motion.h2>
             <motion.p
               {...fadeUp}
@@ -299,7 +299,7 @@ export default function Commercial() {
             className="display display-xl mx-auto max-w-3xl text-cream"
           >
             Transform your commercial vision{' '}
-            <span className="italic tracking-[0.01em]">into reality.</span>
+            <span className="italic tracking-[0.08em]">into reality.</span>
           </motion.h2>
           <motion.p
             {...fadeUp}

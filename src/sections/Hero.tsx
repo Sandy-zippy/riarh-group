@@ -60,7 +60,7 @@ export default function Hero() {
         >
           Your commercial vision.
           <br />
-          Built on time, <span className="italic">built <span className="tracking-[0.02em]">right.</span></span>
+          Built on time, <span className="italic">built <span className="tracking-[0.09em]">right.</span></span>
         </motion.h1>
         <motion.p
           {...fadeUp}

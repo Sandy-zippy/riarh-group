@@ -326,7 +326,7 @@ function Relationships() {
               >
                 We build relationships first.
                 <span className="italic block">
-                  The structures follow<span style={{ marginLeft: '0.03em' }}>.</span>
+                  The structures <span style={{ letterSpacing: '0.05em' }}>follow</span><span style={{ marginLeft: '0.1em' }}>.</span>
                 </span>
               </motion.h2>
               <motion.p
@@ -595,7 +595,7 @@ function CTA() {
         >
           We do not just hire workers. We recruit{' '}
           <span className="italic">
-            problem <span style={{ letterSpacing: '0.015em' }}>solvers.</span>
+            problem <span style={{ letterSpacing: '0.08em' }}>solvers.</span>
           </span>
         </motion.h2>
         <motion.p
