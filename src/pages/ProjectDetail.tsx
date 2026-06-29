@@ -51,7 +51,7 @@ function Plate({ src, alt, eager }: { src: string; alt: string; eager: boolean }
       transition={SPRING}
       style={{ aspectRatio: String(aspect) }}
       className={`relative w-full overflow-hidden rounded-xl bg-ink-2 ${
-        portrait ? 'mx-auto max-w-[22rem] sm:max-w-[24rem] md:max-w-[28rem]' : ''
+        portrait ? '' : 'md:col-span-2'
       }`}
     >
       <div ref={ref} className="absolute inset-0 overflow-hidden">
@@ -185,7 +185,10 @@ export default function ProjectDetail() {
       {/* ── GALLERY ── ordered front-of-house to back-of-house ── */}
       <section className="bg-ink">
         <div className="mx-auto max-w-7xl px-6 pb-24 md:pb-32">
-          <div className="flex flex-col gap-6 md:gap-8">
+          {/* Landscapes span the full width; portraits take one column so two
+              tall photos pair up side by side instead of floating narrow with
+              voids. Photo order (front-of-house to back) is preserved. */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
             {gallery.map((src, i) => (
               <Plate
                 key={src}

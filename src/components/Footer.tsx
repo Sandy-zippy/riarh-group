@@ -16,10 +16,10 @@ const QUICKLINKS = [
 export default function Footer() {
   const reduce = useReducedMotion()
   const { pathname } = useLocation()
-  // The Commercial/Portfolio page has its own "Transform your commercial vision"
-  // CTA band, so suppress this global closing CTA there to avoid two stacked
-  // action bands. It stays on every other route (incl. project detail pages).
-  const showCta = pathname !== '/commercial'
+  // Commercial, Services and About each carry their own closing CTA, so suppress
+  // this global one there to avoid two stacked action bands. It stays on every
+  // other route (home, contact, legal, project detail).
+  const showCta = !['/commercial', '/services', '/about'].includes(pathname)
 
   return (
     <footer className="bg-ink">
@@ -63,14 +63,15 @@ export default function Footer() {
 
       {/* Columns on solid ink */}
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-16">
-        {/* Top band: brand + descriptor on the left, link groups on the right */}
-        <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
+        {/* Top band on the same 4-col rail as the offices below, so brand and
+            link groups line up with the office columns (no hollow centre). */}
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
           <motion.div
             initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={reduce ? { duration: 0 } : { ...SPRING, delay: 0 }}
-            className="max-w-sm"
+            className="max-w-sm md:col-span-2"
           >
             <div className="display text-2xl text-cream">
               Riarh<span className="text-accent">.</span>Group
@@ -89,40 +90,43 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={reduce ? { duration: 0 } : { ...SPRING, delay: 0.08 }}
-            className="flex gap-16 sm:gap-24"
           >
-            <div>
-              <p className="eyebrow mb-3">Quicklinks</p>
-              <ul>
-                {QUICKLINKS.map((l) => (
-                  <li key={l.to}>
-                    <Link to={l.to} className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="eyebrow mb-3">Follow</p>
-              <ul>
-                <li>
-                  <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
-                    Instagram
-                  </a>
+            <p className="eyebrow mb-3">Quicklinks</p>
+            <ul>
+              {QUICKLINKS.map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to} className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                    {l.label}
+                  </Link>
                 </li>
-                <li>
-                  <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
-                    Facebook
-                  </a>
-                </li>
-                <li>
-                  <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
-                    LinkedIn
-                  </a>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={reduce ? { duration: 0 } : { ...SPRING, delay: 0.12 }}
+          >
+            <p className="eyebrow mb-3">Follow</p>
+            <ul>
+              <li>
+                <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-2 text-sm text-cream/70 hover:text-accent">
+                  LinkedIn
+                </a>
+              </li>
+            </ul>
           </motion.div>
         </div>
 
@@ -136,7 +140,7 @@ export default function Footer() {
         >
           {OFFICES.map((o) => (
             <div key={o.name}>
-              <p className="eyebrow mb-2">{o.name}</p>
+              <p className="eyebrow mb-2 lg:min-h-[2.4em]">{o.name}</p>
               <a
                 href={`tel:${o.tel}`}
                 className="inline-flex min-h-[40px] items-center whitespace-nowrap text-sm font-medium text-accent transition-colors hover:text-cream"

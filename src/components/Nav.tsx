@@ -41,6 +41,22 @@ export default function Nav() {
           : 'border-b border-transparent bg-transparent')
       }
     >
+      {/* Backdrop scrim: dims the page (and its hero CTA) behind the open mobile
+          menu so nothing bleeds through. Tap anywhere to close. */}
+      <AnimatePresence>
+        {open && (
+          <motion.button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 -z-10 h-[100dvh] w-screen cursor-default bg-ink/85 backdrop-blur-sm lg:hidden"
+          />
+        )}
+      </AnimatePresence>
       <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" aria-label="Riarh Group home" className="flex min-h-11 items-center">
           <img

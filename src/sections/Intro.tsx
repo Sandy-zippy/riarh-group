@@ -28,14 +28,20 @@ export default function Intro() {
         animate={inView ? 'show' : 'hidden'}
         className="mx-auto max-w-7xl px-6 pt-28 pb-20 md:pt-32 md:pb-[100px]"
       >
-        {/* Eyebrow pinned top-left, with full-width trailing rule */}
-        <motion.div variants={item} className="flex items-center gap-4">
+        {/* Centered eyebrow (short rule each side) to match the centered stack below */}
+        <motion.div variants={item} className="flex items-center justify-center gap-4">
+          <motion.span
+            initial={{ scaleX: reduce ? 1 : 0 }}
+            animate={inView ? { scaleX: 1 } : undefined}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className="h-px w-12 origin-right bg-accent/70"
+          />
           <span className="eyebrow whitespace-nowrap">Welcome to Riarh Group</span>
           <motion.span
             initial={{ scaleX: reduce ? 1 : 0 }}
             animate={inView ? { scaleX: 1 } : undefined}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="h-px flex-1 origin-left bg-accent/70"
+            className="h-px w-12 origin-left bg-accent/70"
           />
         </motion.div>
 

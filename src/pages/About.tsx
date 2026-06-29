@@ -583,10 +583,25 @@ function CTA() {
         <motion.div
           {...enter}
           transition={SPRING}
-          className="flex items-center gap-4"
+          className="flex items-center justify-center gap-4"
         >
+          <motion.span
+            aria-hidden
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ ...SPRING, duration: 0.6 }}
+            className="h-px w-16 origin-right bg-accent"
+          />
           <span className="eyebrow">A Collective of Experts</span>
-          <AccentRule />
+          <motion.span
+            aria-hidden
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ ...SPRING, duration: 0.6 }}
+            className="h-px w-16 origin-left bg-accent"
+          />
         </motion.div>
         <motion.h2
           {...enter}

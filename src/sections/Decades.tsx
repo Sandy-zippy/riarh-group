@@ -26,7 +26,7 @@ function Stat({ value }: { value: string }) {
 export default function Decades() {
   return (
     <section className="bg-ink">
-      <div className="mx-auto max-w-[80rem] px-6 pt-[58px] pb-10 md:px-12">
+      <div className="mx-auto max-w-7xl px-6 pt-[58px] pb-10">
         <div className="grid items-start gap-12 md:grid-cols-2">
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
