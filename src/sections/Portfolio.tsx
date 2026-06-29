@@ -64,7 +64,7 @@ export default function Portfolio() {
                 key={c}
                 onClick={() => setActive(c)}
                 className={
-                  'inline-flex min-h-[44px] items-center justify-center rounded-full border px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] transition-colors ' +
+                  'rounded-full border px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] transition-colors ' +
                   (isActive
                     ? 'border-accent bg-accent text-ink'
                     : isTI

@@ -465,7 +465,7 @@ function Team() {
             className="display display-xl mt-8 max-w-2xl text-cream"
           >
             The people behind{' '}
-            <span className="italic">every build.</span>
+            <span className="italic">every build<span style={{ marginLeft: '0.08em' }}>.</span></span>
           </motion.h2>
 
           <div className="mt-14 grid gap-x-12 gap-y-14 grid-cols-1 lg:grid-cols-3">
@@ -524,7 +524,7 @@ function Ethos() {
             className="display display-xl mt-8 max-w-2xl text-cream"
           >
             The values that hold up{' '}
-            <span className="italic whitespace-nowrap">every build.</span>
+            <span className="italic whitespace-nowrap">every build<span style={{ marginLeft: '0.08em' }}>.</span></span>
           </motion.h2>
 
           <div className="mt-14 grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] md:gap-20">
@@ -610,7 +610,7 @@ function CTA() {
         >
           We do not just hire workers. We recruit{' '}
           <span className="italic">
-            problem <span style={{ letterSpacing: '0.08em' }}>solvers.</span>
+            problem solvers<span style={{ marginLeft: '0.08em' }}>.</span>
           </span>
         </motion.h2>
         <motion.p

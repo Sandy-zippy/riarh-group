@@ -113,7 +113,6 @@ export type Project = {
   scope: string
   intro?: string // optional per-project intro sentence, overrides the shared detail-page template
   image?: string // legacy single filename in /public/projects (kept for hero/CTA bands)
-  card?: string // optional card/thumbnail override (projects-relative path); detail gallery order is unaffected
 }
 
 export const HERO_IMAGE = 'projects/_hero.jpg'
@@ -125,7 +124,6 @@ export const GALLERIES: Record<string, string[]> = galleriesData
 // Card thumbnail = first (front-of-house) gallery image, falling back to the
 // legacy single file for entries without a processed gallery.
 export const cardImage = (p: Project): string | undefined => {
-  if (p.card) return p.card
   if (p.slug && GALLERIES[p.slug]?.length) return GALLERIES[p.slug][0]
   return p.image ? `projects/${p.image}` : undefined
 }
@@ -133,7 +131,7 @@ export const cardImage = (p: Project): string | undefined => {
 // Renamed + relocated per Dal's notes; real photos from Dal's pack.
 // Image-backed projects (with slug + gallery) lead so the grid shows real work.
 export const PROJECTS: Project[] = [
-  { name: 'Broadway Towers', slug: 'broadway-towers', location: 'Vancouver, BC', sector: 'Commercial', scope: 'Commercial office tower', image: 'broadway-towers.jpg', card: 'projects/broadway-towers/07.jpg' },
+  { name: 'Broadway Towers', slug: 'broadway-towers', location: 'Vancouver, BC', sector: 'Commercial', scope: 'Commercial office tower', image: 'broadway-towers.jpg' },
   { name: 'Mucho Burrito', slug: 'mucho-burrito-abbotsford', location: 'Abbotsford, BC', sector: 'Commercial', scope: 'Restaurant fit-out', image: 'mucho-burrito-abbotsford.jpg' },
   { name: 'Heal Wellness', slug: 'heal-wellness', location: 'Abbotsford, BC', sector: 'Tenant Improvements', scope: 'Wellness clinic fit-out', image: 'heal-wellness.jpg' },
   { name: 'Fresh Haul Logistics', slug: 'fresh-haul-logistics', location: 'Surrey / Langley, BC', sector: 'Industrial', scope: 'Industrial warehouse build', image: 'fresh-haul-logistics.jpg' },
