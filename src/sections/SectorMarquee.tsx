@@ -23,7 +23,7 @@ export default function SectorMarquee() {
       <Marquee durationSec={48}>
         {SECTORS.map((s) => (
           <span key={s} className="flex items-center">
-            <span className="display whitespace-nowrap px-6 text-[clamp(1.25rem,2vw,1.75rem)] text-cream/85 md:px-9">
+            <span className="display whitespace-nowrap px-6 text-[clamp(1.25rem,2vw,1.75rem)] leading-[1.5] text-cream/85 md:px-9">
               {s}
             </span>
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
