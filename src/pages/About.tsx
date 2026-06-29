@@ -609,7 +609,7 @@ function CTA() {
           className="display display-xl mt-8 max-w-2xl text-balance text-ink"
         >
           We do not just hire workers. We recruit{' '}
-          <span className="italic">
+          <span className="italic" style={{ marginLeft: '0.06em' }}>
             problem solvers<span style={{ marginLeft: '0.08em' }}>.</span>
           </span>
         </motion.h2>
