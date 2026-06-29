@@ -115,7 +115,7 @@ function Stat({ value }: { value: string }) {
   }, [inView, reduce, target, mv])
 
   const raisedPlus = plus && (
-    <span className="text-[0.8em] text-accent" style={{ verticalAlign: '0.08em' }}>
+    <span className="text-[1.15em] font-medium text-accent" style={{ verticalAlign: '0.04em' }}>
       {plus}
     </span>
   )
@@ -188,7 +188,7 @@ function Hero() {
           className="absolute inset-x-0 -top-[8%] h-[116%] w-full will-change-transform"
         >
           <img
-            src={asset('projects/happy-prairie-pharmacy/01.jpg')}
+            src={asset('about-origin.jpg')}
             alt="Interior of a Riarh Group healthcare pharmacy build"
             loading="eager"
             decoding="async"

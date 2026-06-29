@@ -15,7 +15,7 @@ function Stat({ value }: { value: string }) {
     <span>
       {base}
       {plus && (
-        <span className="text-[0.8em] text-accent" style={{ verticalAlign: '0.08em' }}>
+        <span className="text-[1.15em] font-medium text-accent" style={{ verticalAlign: '0.04em' }}>
           {plus}
         </span>
       )}
