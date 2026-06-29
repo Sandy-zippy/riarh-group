@@ -115,7 +115,7 @@ function Stat({ value }: { value: string }) {
   }, [inView, reduce, target, mv])
 
   const raisedPlus = plus && (
-    <span className="text-[0.42em]" style={{ verticalAlign: '0.55em' }}>
+    <span className="text-[0.8em] text-accent" style={{ verticalAlign: '0.08em' }}>
       {plus}
     </span>
   )
@@ -468,7 +468,7 @@ function Team() {
             <span className="italic">every build.</span>
           </motion.h2>
 
-          <div className="mt-14 grid gap-x-12 gap-y-14 sm:grid-cols-2 md:grid-cols-3">
+          <div className="mt-14 grid gap-x-12 gap-y-14 grid-cols-1 lg:grid-cols-3">
             {TEAM.map((m, i) => (
               <motion.div
                 key={m.name}
@@ -483,7 +483,7 @@ function Team() {
                   >
                     {m.initials}
                   </span>
-                  <h3 className="display mt-7 text-[1.9375rem] leading-none text-cream">
+                  <h3 className="display mt-7 whitespace-nowrap text-[1.9375rem] leading-none text-cream">
                     {m.name}
                   </h3>
                   <p className="mt-3 text-xs uppercase tracking-[0.18em] text-accent">

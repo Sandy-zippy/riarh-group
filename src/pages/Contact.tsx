@@ -118,24 +118,22 @@ export default function Contact() {
     const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>)
 
     try {
-      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body })
-      // Apps Script returns JSON; if parsing is blocked by CORS the POST still
-      // reached the server (sheet + email are the source of truth), so a
-      // resolved request is treated as success.
-      let ok = res.ok
-      try {
-        const json = await res.json()
-        ok = json.success !== false
-      } catch {
-        /* opaque/non-JSON response — request still delivered */
-      }
-      if (ok) {
-        setSubmitted(true)
-      } else {
-        setError('Something went wrong sending your message. Please call us or email ' + EMAIL + '.')
-      }
+      // Apps Script web apps don't return CORS headers, so we POST in no-cors
+      // mode: the request is still delivered (the sheet + notification email are
+      // the source of truth) but the response is opaque and can't be read. A
+      // resolved fetch means the submission left the browser; only a thrown
+      // network error (offline, blocked, DNS) means it never sent — and that is
+      // the only case where we must NOT show the "Thank you" state.
+      await fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', body })
+      setSubmitted(true)
     } catch {
-      setError('We could not reach the server. Please check your connection, or email ' + EMAIL + '.')
+      setError(
+        'We could not send your message. Please check your connection and try again, or reach us directly at ' +
+          EMAIL +
+          ' or ' +
+          OFFICES[0].phone +
+          '.',
+      )
     } finally {
       setSending(false)
     }
@@ -206,7 +204,7 @@ export default function Contact() {
           >
             <a
               href={`mailto:${EMAIL}`}
-              className="group inline-flex max-w-full items-center gap-2.5 break-words text-cream transition-colors hover:text-accent"
+              className="group inline-flex min-h-[44px] max-w-full items-center gap-2.5 break-words py-1 text-cream transition-colors hover:text-accent"
             >
               <MailIcon />
               <span>{EMAIL}</span>
@@ -226,10 +224,10 @@ export default function Contact() {
                 <p className="eyebrow">{o.name}</p>
                 <a
                   href={`tel:${o.tel}`}
-                  className="group inline-flex items-center gap-2.5 text-cream transition-colors hover:text-accent"
+                  className="group inline-flex min-h-[44px] items-center gap-2.5 py-1 text-cream transition-colors hover:text-accent"
                 >
                   <PhoneIcon />
-                  <span>{o.phone}</span>
+                  <span className="whitespace-nowrap">{o.phone}</span>
                 </a>
                 <span className="inline-flex items-start gap-2.5 text-cream [&>svg]:mt-0.5 [&>svg]:shrink-0">
                   <PinIcon />

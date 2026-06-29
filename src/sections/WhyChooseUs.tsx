@@ -149,7 +149,7 @@ export default function WhyChooseUs() {
               <h3 className="display text-[1.65rem] leading-[1.3] text-cream">
                 {why.title}
               </h3>
-              <p className="mt-4 max-w-md text-[0.875rem] font-thin leading-[1.92] tracking-[0.04em] text-muted">
+              <p className="mt-4 max-w-md text-[0.875rem] font-thin leading-[1.92] tracking-[0.04em] text-muted md:max-w-2xl">
                 {why.desc}
               </p>
             </motion.div>

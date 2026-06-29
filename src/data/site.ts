@@ -111,6 +111,7 @@ export type Project = {
   location: string
   sector: 'Commercial' | 'Industrial' | 'Tenant Improvements'
   scope: string
+  intro?: string // optional per-project intro sentence, overrides the shared detail-page template
   image?: string // legacy single filename in /public/projects (kept for hero/CTA bands)
 }
 
@@ -146,7 +147,7 @@ export const PROJECTS: Project[] = [
   // Existing Medico builds (kept on site; no gallery pack supplied, so no detail page)
   { name: 'Coquitlam Animal Hospital', location: 'Coquitlam, BC', sector: 'Tenant Improvements', scope: 'Veterinary medical build-out' },
   { name: 'Smile Plus Dentistry', location: 'Surrey, BC', sector: 'Tenant Improvements', scope: '2,840 sq ft dental fit-out' },
-  { name: 'Woodland Veterinary Clinic', slug: 'woodland-veterinary', location: 'Vancouver, BC', sector: 'Tenant Improvements', scope: '2,200 sq. ft veterinary clinic' },
+  { name: 'Woodland Veterinary Clinic', slug: 'woodland-veterinary', location: 'Vancouver, BC', sector: 'Tenant Improvements', scope: '2,200 sq. ft veterinary clinic', intro: 'A 2,200 sq. ft veterinary clinic construction from first blueprint to final walkthrough, managed by one accountable team.' },
 ]
 
 // Lookup helper for the project detail route.

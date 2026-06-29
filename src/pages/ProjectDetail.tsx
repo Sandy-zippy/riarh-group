@@ -99,6 +99,13 @@ export default function ProjectDetail() {
 
   const hero = gallery[0]
 
+  // Shared detail-page intro. Articles agree with the scope's first letter, and
+  // a project can supply its own `intro` to override the template verbatim.
+  const article = /^[aeiou]/.test(project.scope.toLowerCase().trim()) ? 'An' : 'A'
+  const intro =
+    project.intro ??
+    `${article} ${project.scope.toLowerCase()} from first blueprint to final walkthrough, managed by one accountable team.`
+
   return (
     <>
       {/* ── HERO ── front-of-house photo, name anchored lower-left ── */}
@@ -116,7 +123,7 @@ export default function ProjectDetail() {
           <motion.div {...fadeUp} transition={SPRING}>
             <Link
               to="/commercial"
-              className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-cream/70 transition-colors hover:text-cream"
+              className="-my-2 inline-flex min-h-[44px] items-center gap-2 py-2 text-xs font-medium uppercase tracking-[0.16em] text-cream/70 transition-colors hover:text-cream"
             >
               <span aria-hidden>←</span> All projects
             </Link>
@@ -169,8 +176,7 @@ export default function ProjectDetail() {
               transition={{ ...SPRING, delay: 0.1 }}
               className="display max-w-xl text-[clamp(1.5rem,2.6vw,2rem)] leading-snug text-cream"
             >
-              A {project.scope.toLowerCase()} from first blueprint to final
-              walkthrough, managed by one accountable team.
+              {intro}
             </motion.p>
           </div>
         </div>

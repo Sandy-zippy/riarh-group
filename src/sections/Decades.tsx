@@ -1,47 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
-import { animate, motion, useInView, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { STATS } from '../data/site'
 import { SPRING } from '../motion'
 import { SpotlightCard } from '../components/premium'
 
-// Reference renders the stat at rest with the "+" suffix small and raised —
-// e.g. "100K" full size, "+" superscript. A single count-up ticks the number
-// from 0 to its target once when scrolled into view (~1.2s ease); the "+" and
-// superscript rendering, and the display-* classes, are unchanged. Respects
-// prefers-reduced-motion by rendering the final value immediately.
+// Reference renders the stat at rest with the "+" suffix raised — e.g. "100K"
+// full size, "+" close above. The value renders statically (no count-up); the
+// card's entrance spring handles the reveal. The "+" is sized for legibility.
 function Stat({ value }: { value: string }) {
   const m = value.match(/^(.*?)(\+)?$/)
   const base = m ? m[1] : value
   const plus = m && m[2] ? m[2] : ''
 
-  // Split the numeric lead from any trailing unit suffix (e.g. "100K" → 100,"K").
-  const nm = base.match(/^(\d+)(.*)$/)
-  const target = nm ? parseInt(nm[1], 10) : NaN
-  const suffix = nm ? nm[2] : ''
-
-  const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-  const reduce = useReducedMotion()
-  const [display, setDisplay] = useState(() =>
-    Number.isNaN(target) ? base : reduce ? String(target) : '0',
-  )
-
-  useEffect(() => {
-    if (Number.isNaN(target) || reduce) return
-    if (!inView) return
-    const controls = animate(0, target, {
-      duration: 1.2,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate: (v) => setDisplay(String(Math.round(v))),
-    })
-    return () => controls.stop()
-  }, [inView, target, reduce])
-
   return (
-    <span ref={ref}>
-      {Number.isNaN(target) ? base : `${display}${suffix}`}
+    <span>
+      {base}
       {plus && (
-        <span className="text-[0.62em] text-accent" style={{ verticalAlign: '0.4em' }}>
+        <span className="text-[0.8em] text-accent" style={{ verticalAlign: '0.08em' }}>
           {plus}
         </span>
       )}

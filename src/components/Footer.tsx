@@ -73,16 +73,19 @@ export default function Footer() {
             <div className="display text-2xl text-cream">
               Riarh<span className="text-accent">.</span>Group
             </div>
-            <a href={`mailto:${EMAIL}`} className="mt-4 inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
+            <a href={`mailto:${EMAIL}`} className="mt-4 inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
               {EMAIL}
             </a>
-            <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {/* Single column at the narrow md (~768) width so office names and
+                phone numbers don't get crushed into two thin columns; two columns
+                returns at lg where the footer column is wide enough. */}
+            <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
               {OFFICES.map((o) => (
                 <div key={o.name}>
                   <p className="eyebrow mb-2">{o.name}</p>
                   <a
                     href={`tel:${o.tel}`}
-                    className="inline-flex items-center text-sm font-medium text-accent transition-colors hover:text-cream"
+                    className="inline-flex min-h-[44px] items-center whitespace-nowrap text-sm font-medium text-accent transition-colors hover:text-cream"
                   >
                     {o.phone}
                   </a>
@@ -106,7 +109,7 @@ export default function Footer() {
             <ul>
               {QUICKLINKS.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className="inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
+                  <Link to={l.to} className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
                     {l.label}
                   </Link>
                 </li>
@@ -123,17 +126,17 @@ export default function Footer() {
             <p className="eyebrow mb-3">Follow</p>
             <ul>
               <li>
-                <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
+                <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
                   Instagram
                 </a>
               </li>
               <li>
-                <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" className="inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
+                <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
                   Facebook
                 </a>
               </li>
               <li>
-                <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center py-2.5 text-sm text-cream/70 hover:text-accent">
+                <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center py-3 text-sm text-cream/70 hover:text-accent">
                   LinkedIn
                 </a>
               </li>
@@ -144,8 +147,8 @@ export default function Footer() {
         <div className="mt-10 flex flex-col gap-1 border-t border-line/60 pt-5 text-xs text-cream/55 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <span className="py-2">Copyright © {new Date().getFullYear()} | Riarh Group</span>
           <div className="flex gap-6">
-            <Link to="/privacy-policy" className="inline-flex items-center py-3 hover:text-accent">Privacy Policy</Link>
-            <Link to="/terms-and-conditions" className="inline-flex items-center py-3 hover:text-accent">Terms &amp; Conditions</Link>
+            <Link to="/privacy-policy" className="inline-flex min-h-[44px] items-center py-3 hover:text-accent">Privacy Policy</Link>
+            <Link to="/terms-and-conditions" className="inline-flex min-h-[44px] items-center py-3 hover:text-accent">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>
