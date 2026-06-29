@@ -161,7 +161,7 @@ export default function Commercial() {
           {/* Three evenly sized capability cards (uniform text cards, each with
               a cursor spotlight). Equal-height by stretch so the row reads as a
               clean, balanced set rather than one promoted tile. */}
-          <div className="mt-16 grid items-stretch gap-4 md:grid-cols-3">
+          <div className="mt-16 grid items-stretch gap-4 lg:grid-cols-3">
             {CAPABILITIES.map((c, i) => (
               <motion.div
                 key={c.title}

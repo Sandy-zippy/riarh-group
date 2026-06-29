@@ -97,7 +97,7 @@ export default function Nav() {
         <div className="flex items-center gap-5">
           <Link
             to="/contact-us"
-            className="hidden rounded-none border border-cream/45 px-7 py-2.5 text-[0.74rem] font-medium uppercase tracking-[0.18em] text-cream transition-colors duration-300 hover:bg-cream hover:text-ink sm:block"
+            className="hidden rounded-none border border-cream/45 px-7 py-2.5 text-[0.74rem] font-medium uppercase tracking-[0.18em] text-cream transition-colors duration-300 hover:bg-cream hover:text-ink lg:block"
           >
             Let's Talk
           </Link>

@@ -2,7 +2,9 @@
 
 Compiled from per-page QA audits of the live gh-pages deployment. Items are grouped by severity, then ordered by page (Home → Who We Are → Commercial → Services → Project detail → Global). Each item carries a stable ID, exact location, type, evidence, and the originating PDF change-ID where applicable. Duplicate reports across agents have been merged.
 
-Severity counts: **1 Critical · 3 Major · 7 Minor · 8 Nit**
+Severity counts (original): **1 Critical · 3 Major · 7 Minor · 8 Nit**
+
+**Update 2026-06-29 — resolved since this audit:** C-01 (British Columbia label, live), M-01 + M-02 (Woodland gallery, verified live across 3 viewports), M-03 (contact form now shows success only on confirmed backend response, commit `a8b3176`), m-03 (home hero no longer repeats as the Broadway featured card — card now uses `07.jpg`, commit `a8b3176`). Remaining open items below are minors/nits (hover zoom m-01, stat "+" m-02, About hero softness/alt m-04/m-05, Ignis 08 m-06, mobile tap targets m-07, and the n-01…n-08 nits).
 
 ---
 
@@ -19,14 +21,16 @@ Severity counts: **1 Critical · 3 Major · 7 Minor · 8 Nit**
 
 ## MAJOR
 
-### [M-01] Project detail (Woodland Veterinary) — orphaned portrait + side void in gallery
+> **RESOLVED (verified 2026-06-29).** M-01 and M-02 below were fixed in commit `faaee0a` and are live. The gallery now resolves orientation deterministically from a baked `PHOTO_RATIOS` manifest in `ProjectDetail.tsx` (no `onLoad` race), and `planGallery()` pairs portraits two-per-row and promotes a lone trailing portrait to a centered full-width slot. Live re-verification across desktop 1440 / tablet 768 / mobile 390: all 16 Woodland plates render at **0% crop** (box ratio == natural ratio), portraits pair (06|07, 08|09, 13|14, 15|16), the odd trailing portrait `10` is centered full-width, and there are **no empty-column voids**. Every baked ratio matches the real photo dimensions. No further action.
+
+### [M-01] Project detail (Woodland Veterinary) — orphaned portrait + side void in gallery — RESOLVED
 - **Page:** /#/commercial/woodland-veterinary
 - **Location:** Project detail 2-column gallery grid (`ProjectDetail.tsx` Plate)
 - **Type:** alignment · **Change-ID:** —
 - **Description:** Portrait photo `10.jpg` (600x900) renders alone in the left column, immediately followed by full-width landscape `11.jpg`, leaving the right column (C2) an empty dark void beside a tall photo. Portrait `13.jpg` orphans the same way. Plate-rect map: `10.jpg 600x900 L104` then `11.jpg 1232x821 L104` with no C2 sibling; confirmed in full-page screenshot. This is exactly the "narrow floating image with side void" the gallery code comment claims to prevent. The consecutive portrait group has an odd count (`06,07,08,09,10` = 5), guaranteeing an orphan.
 - **Recommended fix:** Pair portraits deterministically (precompute orientation from the manifest and group portraits two-per-row); for odd counts, promote the trailing portrait to a full-width landscape slot or insert a matched filler so no column is left empty.
 
-### [M-02] Project detail (Woodland Veterinary) — non-deterministic / cropped portraits
+### [M-02] Project detail (Woodland Veterinary) — non-deterministic / cropped portraits — RESOLVED
 - **Page:** /#/commercial/woodland-veterinary
 - **Location:** Project detail gallery, Plate orientation logic
 - **Type:** image-quality · **Change-ID:** —
