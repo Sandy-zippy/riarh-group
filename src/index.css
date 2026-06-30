@@ -8,6 +8,13 @@
   font-style: normal;
   font-display: swap;
 }
+/* Italic = the original Silver Editorial italic, rendered exactly as the
+   reference site does: kerning on (the font's GPOS kern feature), standard
+   ligatures on, no letter-spacing. This is the cleanest rendering — re-spacing
+   the glyph metrics was tested three ways (tight, loose, controlled-overhang)
+   and every version read worse, because the face's swashes can't be auto-spaced
+   geometrically without the font's own kerning. See scripts/fix-italic-spacing.py
+   for that exploration. */
 @font-face {
   font-family: 'Silver Editorial';
   src: url('/fonts/silver-editorial-italic.woff2') format('woff2');
@@ -105,10 +112,11 @@
     font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.001em;
-    /* Disable standard ligatures so "fi" (e.g. "final") renders as a normal f
-       plus a dotted i instead of the merged ligature that read as the f and the
-       i-dot overlapping. */
-    font-feature-settings: 'liga' 0, 'clig' 0;
+    /* Reference settings: kerning + standard ligatures on. Disabling ligatures
+       split "fi" so the i-dot collided with the f hood; the font's own ligature
+       glyph (as the reference uses) is the clean form. */
+    font-kerning: normal;
+    font-feature-settings: normal;
   }
   /* fluid display sizes — exact reference scale @1440px (clamp scales down).
      welcome 82px/1.46 · commercial 53px/1.66 · section 46px/1.48 · featured 110px/1.3 */
