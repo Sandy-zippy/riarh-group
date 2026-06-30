@@ -8,13 +8,9 @@
   font-style: normal;
   font-display: swap;
 }
-/* Display italic = Playfair Display italic. The original Silver Editorial italic
-   was a swashy cut whose glyphs collided at heading size; Playfair's italic has
-   clean, even metrics. The roman stays Silver Editorial; the family name is
-   reused so all `.display` italic text picks up this face. */
 @font-face {
   font-family: 'Silver Editorial';
-  src: url('/fonts/playfair-display-italic.woff2') format('woff2');
+  src: url('/fonts/silver-editorial-italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
