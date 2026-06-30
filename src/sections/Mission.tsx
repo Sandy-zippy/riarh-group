@@ -102,7 +102,7 @@ function Header() {
         className="display display-xl mx-auto mt-8 max-w-2xl text-center text-ink"
       >
         Building spaces that elevate
-        <span className="italic block">lives and businesses</span>
+        <span className="block">lives and businesses</span>
       </motion.h2>
       <motion.p
         initial={{ opacity: 0, y: 20 }}

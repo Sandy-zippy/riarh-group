@@ -52,7 +52,7 @@ export default function Intro() {
             className="display display-hero mx-auto max-w-6xl text-cream"
           >
             <span className="block text-balance">100,000+ sq. ft. built across BC.</span>
-            <span className="block text-balance italic">Managed start to finish under one roof.</span>
+            <span className="block text-balance">Managed start to finish under one roof.</span>
           </motion.h2>
           <motion.p
             variants={item}

@@ -99,8 +99,7 @@ export default function Services() {
             transition={{ ...SPRING, delay: 0.08 }}
             className="display display-hero relative mx-auto mt-10 max-w-5xl text-center text-cream"
           >
-            First initial <span className="italic px-[0.12em]">plans</span> to
-            final <span className="italic">walkthrough<span style={{ marginLeft: '0.08em' }}>.</span></span>
+            First initial plans to final walkthrough.
           </motion.h2>
 
           <motion.p
@@ -180,7 +179,7 @@ export default function Services() {
               className="display display-2xl max-w-md text-cream"
             >
               Transform your commercial vision{' '}
-              <span className="italic">into reality<span style={{ marginLeft: '0.08em' }}>.</span></span>
+              into reality.
             </motion.h2>
             <motion.div
               initial={{ opacity: 0, y: 24 }}
