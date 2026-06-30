@@ -325,9 +325,7 @@ function Relationships() {
                 className="display display-xl mt-8 max-w-lg text-cream"
               >
                 We build relationships first.
-                <span className="italic block">
-                  The structures follow<span style={{ marginLeft: '0.08em' }}>.</span>
-                </span>
+                <span className="italic block">The structures follow.</span>
               </motion.h2>
               <motion.p
                 {...enter}
@@ -465,7 +463,7 @@ function Team() {
             className="display display-xl mt-8 max-w-2xl text-cream"
           >
             The people behind{' '}
-            <span className="italic">every build<span style={{ marginLeft: '0.08em' }}>.</span></span>
+            <span className="italic">every build.</span>
           </motion.h2>
 
           <div className="mt-14 grid gap-x-12 gap-y-14 grid-cols-1 lg:grid-cols-3">
@@ -524,7 +522,7 @@ function Ethos() {
             className="display display-xl mt-8 max-w-2xl text-cream"
           >
             The values that hold up{' '}
-            <span className="italic whitespace-nowrap">every build<span style={{ marginLeft: '0.08em' }}>.</span></span>
+            <span className="italic whitespace-nowrap">every build.</span>
           </motion.h2>
 
           <div className="mt-14 grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] md:gap-20">
@@ -609,9 +607,7 @@ function CTA() {
           className="display display-xl mt-8 max-w-2xl text-balance text-ink"
         >
           We do not just hire workers. We recruit{' '}
-          <span className="italic" style={{ marginLeft: '0.06em' }}>
-            problem solvers<span style={{ marginLeft: '0.08em' }}>.</span>
-          </span>
+          <span className="italic">problem solvers.</span>
         </motion.h2>
         <motion.p
           {...enter}

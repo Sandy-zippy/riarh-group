@@ -91,7 +91,7 @@ export default function Commercial() {
             className="display display-xl mt-7 max-w-4xl text-balance text-cream"
           >
             Commercial builds that open on time, look the part, and{' '}
-            <span className="italic">hold up for the long run<span style={{ marginLeft: '0.08em' }}>.</span></span>
+            <span className="italic">hold up for the long run.</span>
           </motion.h1>
           <motion.p
             {...fadeUp}
@@ -140,7 +140,7 @@ export default function Commercial() {
                 className="display display-2xl mt-8 max-w-2xl text-ink"
               >
                 We build commercial spaces that keep businesses{' '}
-                <span className="italic">running<span style={{ marginLeft: '0.08em' }}>.</span></span>
+                <span className="italic">running.</span>
               </motion.h2>
             </div>
             <motion.div
@@ -217,7 +217,7 @@ export default function Commercial() {
             >
               In business, time is capital.
               <br />
-              <span className="italic">We respect both<span style={{ marginLeft: '0.08em' }}>.</span></span>
+              <span className="italic">We respect both.</span>
             </motion.h2>
             <motion.p
               {...fadeUp}
@@ -299,7 +299,7 @@ export default function Commercial() {
             className="display display-xl mx-auto max-w-3xl text-cream"
           >
             Transform your commercial vision{' '}
-            <span className="italic">into reality<span style={{ marginLeft: '0.08em' }}>.</span></span>
+            <span className="italic">into reality.</span>
           </motion.h2>
           <motion.p
             {...fadeUp}
