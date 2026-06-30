@@ -8,16 +8,19 @@
   font-style: normal;
   font-display: swap;
 }
-/* Italic = the original Silver Editorial italic, rendered exactly as the
-   reference site does: kerning on (the font's GPOS kern feature), standard
-   ligatures on, no letter-spacing. This is the cleanest rendering — re-spacing
-   the glyph metrics was tested three ways (tight, loose, controlled-overhang)
-   and every version read worse, because the face's swashes can't be auto-spaced
-   geometrically without the font's own kerning. See scripts/fix-italic-spacing.py
-   for that exploration. */
+/* Italic = Silver Editorial italic with collision-only metric repair.
+   The face's v/r/w/k/W arms (and a few bowls) have negative side bearings, so at
+   display sizes their ink overhangs the advance and crosses into the next letter
+   ("every", "solvers", "walkthrough", "structures" all collided). The fix widens
+   ONLY the glyphs whose body ink overhangs — giving a small clearance — and
+   leaves calm letters and the descender swashes (y/p/f/g) untouched, so the
+   swashy character is kept but letters no longer collide. The arm is allowed to
+   overhang the next letter partially (it tucks under the tip) so spacing stays
+   even instead of gapping. Same shapes, repaired metrics.
+   See scripts/fix-italic-spacing.py (FLOOR 55, AF 0.35). */
 @font-face {
   font-family: 'Silver Editorial';
-  src: url('/fonts/silver-editorial-italic.woff2') format('woff2');
+  src: url('/fonts/silver-editorial-italic-fixed.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
