@@ -3,18 +3,21 @@ import { Marquee } from '../components/premium'
 // The commercial verticals Riarh actually builds (drawn from the existing
 // capabilities copy — no fabricated claims). A slow, endless serif ribbon that
 // communicates breadth with motion. Used on Home and Commercial.
+// Order per client (Claudia): the banner OPENS with the broader commercial
+// sectors and the healthcare items (Medical/Dental/Veterinary/Pharmacies) sit
+// at the END of the rotation.
 const SECTORS = [
+  'Corporate Offices',
+  'Co-working Floors',
+  'Retail Storefronts',
+  'Restaurants',
+  'Industrial Space',
+  'Tenant Improvements',
+  'DayCares',
   'Medical Clinics',
   'Dental Clinics',
   'Veterinary Clinics',
   'Pharmacies',
-  'DayCares',
-  'Restaurants',
-  'Retail Storefronts',
-  'Corporate Offices',
-  'Co-working Floors',
-  'Industrial Space',
-  'Tenant Improvements',
 ]
 
 export default function SectorMarquee() {
