@@ -60,7 +60,7 @@ export default function Hero() {
         >
           Your commercial vision.
           <br />
-          Built on time, built right.
+          Built on time, <span className="italic">built r<span style={{ marginRight: '0.06em' }}>i</span>ght<span style={{ marginLeft: '0.08em' }}>.</span></span>
         </motion.h1>
         <motion.p
           {...fadeUp}

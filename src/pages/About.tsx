@@ -164,7 +164,7 @@ function Hero() {
             className="display display-xl max-w-3xl text-cream"
           >
             Built from the most demanding environment in construction,{' '}
-            healthcare, and applied to every
+            <span className="italic">healthcare,</span> and applied to every
             commercial build we take on.
           </motion.h1>
           <motion.p
@@ -325,7 +325,9 @@ function Relationships() {
                 className="display display-xl mt-8 max-w-lg text-cream"
               >
                 We build relationships first.
-                <span className="block">The structures follow.</span>
+                <span className="italic block">
+                  The structures follow<span style={{ marginLeft: '0.08em' }}>.</span>
+                </span>
               </motion.h2>
               <motion.p
                 {...enter}
@@ -388,7 +390,7 @@ function Founder() {
               <motion.p
                 {...enter}
                 transition={{ ...SPRING, delay: 0.1 }}
-                className="display mt-8 text-[2.4rem] leading-none text-cream"
+                className="display mt-8 text-[2.4rem] leading-none italic text-cream"
               >
                 Dal Riarh
               </motion.p>
@@ -463,7 +465,7 @@ function Team() {
             className="display display-xl mt-8 max-w-2xl text-cream"
           >
             The people behind{' '}
-            every build.
+            <span className="italic">every build<span style={{ marginLeft: '0.08em' }}>.</span></span>
           </motion.h2>
 
           <div className="mt-14 grid gap-x-12 gap-y-14 grid-cols-1 lg:grid-cols-3">
@@ -522,7 +524,7 @@ function Ethos() {
             className="display display-xl mt-8 max-w-2xl text-cream"
           >
             The values that hold up{' '}
-            <span className="whitespace-nowrap">every build.</span>
+            <span className="italic whitespace-nowrap">every build<span style={{ marginLeft: '0.08em' }}>.</span></span>
           </motion.h2>
 
           <div className="mt-14 grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] md:gap-20">
@@ -607,7 +609,9 @@ function CTA() {
           className="display display-xl mt-8 max-w-2xl text-balance text-ink"
         >
           We do not just hire workers. We recruit{' '}
-          problem solvers.
+          <span className="italic" style={{ marginLeft: '0.06em' }}>
+            problem solvers<span style={{ marginLeft: '0.08em' }}>.</span>
+          </span>
         </motion.h2>
         <motion.p
           {...enter}
