@@ -133,6 +133,12 @@ export default function Contact() {
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', body })
       const data = (await res.json().catch(() => null)) as { success?: boolean } | null
       if (res.ok && data?.success) {
+  (window as any).dataLayer = (window as any).dataLayer || [];
+  (window as any).dataLayer.push({
+    event: "generate_lead",
+    lead_source: "website",
+    form_name: "contact_form"
+  });
         setSubmitted(true)
       } else {
         setError(failMsg)
